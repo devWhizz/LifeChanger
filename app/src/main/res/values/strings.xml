@@ -1,0 +1,41 @@
+<resources>
+
+    <string name="app_name">LifeChanger</string>
+    <string name="home">LifeChanger</string>
+
+    <!-- Category Titles -->
+    <string name="categoryTitleClimate">Klima</string>
+    <string name="categoryTitleWater">Gewässer</string>
+    <string name="categoryTitleGarbage">Müll</string>
+    <string name="categoryTitleDisaster">Katastrophen</string>
+    <string name="categoryTitleAnimalRights">Tierschutz</string>
+    <string name="categoryTitleSpeciesProtection">Artenschutz</string>
+    <string name="categoryTitleCats">Katzen</string>
+    <string name="categoryTitleDogs">Hunde</string>
+    <string name="categoryTitleHorses">Pferde</string>
+    <string name="categoryTitleKids">Kinder</string>
+    <string name="categoryTitleSeniors">Senioren</string>
+    <string name="categoryTitleHomeless">Obdachlose</string>
+    <string name="categoryTitleRefugees">Flüchtlinge</string>
+    <string name="categoryTitleInclusion">Inklusion</string>
+    <string name="categoryTitleEducation">Bildung</string>
+    <string name="categoryTitleInfrastructure">Infrastruktur</string>
+
+    <string name="categoryTitleEnvironment">Umwelt</string>
+    <string name="categoryTitleAnimal">Tiere</string>
+    <string name="categoryTitlePeople">Menschen</string>
+    <string name="categoryTitleDevelopmentAid">Entwicklungshilfe</string>
+
+    <string name="learn_more">Zu den Spendenaktionen</string>
+    <string name="donateNow">Jetzt spenden</string>
+    <string name="shareText">Schau dir diese Spendenaktion an:</string>
+    <string name="addDonation">Spendenaktion erstellen</string>
+    <string name="addCategory">Kategorie</string>
+    <string name="addTitle">Überschrift</string>
+    <string name="addDescription">Beschreibung</string>
+    <string name="addCreator">Dein Name / Organisation</string>
+    <string name="addImage">Bild hochladen</string>
+
+
+
+</resources>

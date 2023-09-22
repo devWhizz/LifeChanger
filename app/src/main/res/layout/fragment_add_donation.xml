@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.AddDonationFragment">
+
+    <Button
+        android:id="@+id/addBTN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/main"
+        android:padding="16dp"
+        android:text="@string/addDonation"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/addDonationDescription"
+        app:layout_constraintTop_toBottomOf="@+id/addDonationImage" />
+
+    <Button
+        android:id="@+id/cancelBTN"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:padding="16dp"
+        android:text="Cancel"
+        app:layout_constraintStart_toStartOf="@+id/addDonationDescription"
+        app:layout_constraintTop_toBottomOf="@+id/addDonationImage" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/addDonationCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:hint="@string/addCategory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/addDonationTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:hint="@string/addTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addDonationCategory" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/addDonationDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:hint="@string/addDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addDonationTitle" />
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/addDonationCreator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:hint="@string/addCreator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addDonationDescription" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/addDonationImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:hint="@string/addImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addDonationCreator" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

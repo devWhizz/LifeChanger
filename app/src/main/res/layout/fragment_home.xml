@@ -1,0 +1,145 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.HomeFragment">
+
+    <!-- Inhalt der ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- environment section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="32dp"
+                android:paddingBottom="32dp">
+
+                <TextView
+                    android:id="@+id/environmentTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/categoryTitleEnvironment"
+                    android:textAppearance="@style/HeadingMainText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/environmentRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/category_list_item" />
+
+            </LinearLayout>
+
+            <!-- animal section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/third"
+                android:orientation="vertical"
+                android:paddingTop="32dp"
+                android:paddingBottom="32dp">
+
+                <TextView
+                    android:id="@+id/animalTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/categoryTitleAnimal"
+                    android:textAppearance="@style/HeadingMainText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/animalRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/category_list_item" />
+
+            </LinearLayout>
+
+            <!-- people section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="32dp"
+                android:paddingBottom="32dp">
+
+                <TextView
+                    android:id="@+id/peopleTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/categoryTitlePeople"
+                    android:textAppearance="@style/HeadingMainText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/peopleRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/category_list_item" />
+
+            </LinearLayout>
+
+            <!-- developmentAid section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/third"
+                android:orientation="vertical"
+                android:paddingTop="32dp"
+                android:paddingBottom="32dp">
+
+                <TextView
+                    android:id="@+id/developmentAidTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/categoryTitleDevelopmentAid"
+                    android:textAppearance="@style/HeadingMainText" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/developmentAidRV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/category_list_item" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addDonationFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:background="@drawable/rounded_button"
+        app:backgroundTint="@color/second"
+        app:tint="@color/white"
+        android:layout_margin="32dp"
+        app:maxImageSize="40dp"
+        android:clickable="true"
+        android:src="@drawable/baseline_add_24" />
+
+</FrameLayout>
