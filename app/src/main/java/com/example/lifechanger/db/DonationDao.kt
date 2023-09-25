@@ -13,7 +13,7 @@ interface DonationDao {
 
     // insert list of _donation objects into donation_table
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(donationList : List<Donation>)
+    fun insertAll(donationList: List<Donation>)
 
     // update single Donation object in donation_table
     @Update

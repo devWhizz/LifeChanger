@@ -33,9 +33,10 @@
     <string name="addCategory">Kategorie</string>
     <string name="addTitle">Überschrift</string>
     <string name="addDescription">Beschreibung</string>
-    <string name="addCreator">Dein Name / Organisation</string>
+    <string name="addCreator">Organisation / Name des Erstellers</string>
     <string name="addImage">Bild hochladen</string>
-
+    <string name="addAccountInfo">PayPal Adresse</string>
+    <string name="payment">Bezahlung</string>
 
 
 </resources>

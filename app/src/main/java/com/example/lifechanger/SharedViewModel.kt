@@ -32,25 +32,25 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         loadDonation()
     }
 
-    //list of Environment category elements for HomeFragment
+    // list of Environment category elements for HomeFragment
     private val _environmentCategory: MutableLiveData<List<Category>> =
         MutableLiveData(repository.loadEnvironmentCategory())
     val environmentCategory: LiveData<List<Category>>
         get() = _environmentCategory
 
-    //list of Animal category elements for HomeFragment
+    // list of Animal category elements for HomeFragment
     private val _animalCategory: MutableLiveData<List<Category>> =
         MutableLiveData(repository.loadAnimalCategory())
     val animalCategory: LiveData<List<Category>>
         get() = _animalCategory
 
-    //list of People category elements for HomeFragment
+    // list of People category elements for HomeFragment
     private val _peopleCategory: MutableLiveData<List<Category>> =
         MutableLiveData(repository.loadPeopleCategory())
     val peopleCategory: LiveData<List<Category>>
         get() = _peopleCategory
 
-    //list of development aid category elements for HomeFragment
+    // list of development aid category elements for HomeFragment
     private val _developmentAidCategory: MutableLiveData<List<Category>> =
         MutableLiveData(repository.loadDevelopmentAidCategory())
     val developmentAidCategory: LiveData<List<Category>>
@@ -70,7 +70,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getTableCount(): Int {
         return repositoryDonationApi.getCount()
-
     }
 
     fun insertToDb(data: Donation): Job {
@@ -80,6 +79,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             Log.d("SharedViewModel", "Donation Data inserted successfully.")
         }
     }
+
     // retrieve donations based on a specific category from the repository
     fun getDonationByCategory(category: String): LiveData<List<Donation>> {
         return repositoryDonationApi.getDonationsByCategory(category)

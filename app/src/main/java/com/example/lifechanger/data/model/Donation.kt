@@ -11,9 +11,10 @@ data class Donation(
     // converting Json property names
     // create properties for class to be used in adapter
 
+
     @PrimaryKey(autoGenerate = true)
     @Json(name = "ID")
-    var id: Int = 0,
+    var id: Long = 0,
 
     @Json(name = "Category")
     val category: String,
@@ -30,4 +31,7 @@ data class Donation(
     @Json(name = "Donation Image")
     val image: String,
 
-    )
+    @Json(name = "Account Info")
+    val payment: String
+
+)

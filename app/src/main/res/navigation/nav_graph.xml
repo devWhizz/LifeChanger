@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_homeFragment_to_addDonationFragment"
             app:destination="@id/addDonationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
     </fragment>
     <fragment
         android:id="@+id/waterFragment"
@@ -45,5 +48,25 @@
         android:id="@+id/addDonationFragment"
         android:name="com.example.lifechanger.ui.AddDonationFragment"
         android:label="fragment_add_donation"
-        tools:layout="@layout/fragment_add_donation" />
+        tools:layout="@layout/fragment_add_donation" >
+        <action
+            android:id="@+id/action_addDonationFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.lifechanger.ui.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
+        <action
+            android:id="@+id/action_categoryFragment_to_addDonationFragment"
+            app:destination="@id/addDonationFragment" />
+        <action
+            android:id="@+id/action_categoryFragment_to_donationDetailFragment"
+            app:destination="@id/donationDetailFragment" />
+        <argument
+            android:name="selectedCategory"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

@@ -42,13 +42,13 @@ class DonationDetailFragment : Fragment() {
                 if (donationIndex >= 0 && donationIndex < donations.size) {
                     val donation = donations[donationIndex]
 
-                    // Set toolbar title
+                    // set toolbar title
                     (activity as MainActivity).updateToolbarTitleDetail(donation.title)
 
                     binding.donationTitleDetailTV.text = donation.title
                     binding.donationCompanyDetailTV.text = donation.company
 
-                    // Use Coil to load images
+                    // use Coil to load images
                     binding.donationImageDetailIV.load(
                         donation.image.toUri().buildUpon().scheme("https").build()
                     )

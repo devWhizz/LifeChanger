@@ -2,46 +2,40 @@ package com.example.lifechanger.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.findNavController
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
-import com.example.lifechanger.R
-import com.example.lifechanger.data.model.Category
-import com.example.lifechanger.databinding.CategoryListItemBinding
-import com.example.lifechanger.ui.HomeFragmentDirections
+import coil.load
+import com.example.lifechanger.SharedViewModel
+import com.example.lifechanger.data.model.Donation
+import com.example.lifechanger.databinding.DonationdetailItemBinding
 
 class CategoryAdapter(
-    private val dataset: List<Category>
-) : RecyclerView.Adapter<CategoryAdapter.ItemViewHolder>() {
 
-    inner class ItemViewHolder(val binding: CategoryListItemBinding) :
+    //  create val of type List to save data objects and show them in RecyclerView
+    var dataset: List<Donation>,
+    val viewmodel: SharedViewModel,
+) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+
+    inner class CategoryViewHolder(val binding: DonationdetailItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val binding =
-            CategoryListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ItemViewHolder(binding)
+            DonationdetailItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CategoryViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
 
-        //  create val to work with expression
+        // create val to work with expression
         val item = dataset[position]
 
+        //  settings to implement objects in ViewHolder
+        holder.binding.detailTitleTV.text = item.title
+        holder.binding.detailCompanyTV.text = item.company
 
-        // Set text and image for category
-        holder.binding.categoryTitleTV.setText(item.title)
-        holder.binding.categoryTitleIV.setImageResource(item.image)
-
-        // Add OnClickListener to CardView
-        holder.binding.categoryCV.setOnClickListener {
-            val action = when (item.title) {
-                R.string.categoryTitleWater -> HomeFragmentDirections.actionHomeFragmentToWaterFragment()
-                else -> null
-            }
-
-            action?.let {
-                holder.binding.root.findNavController().navigate(it)
-            }
+        //use Coil to load images
+        holder.binding.detailImageIV.load(item.image.toUri().buildUpon().scheme("https").build()) {
         }
     }
 
