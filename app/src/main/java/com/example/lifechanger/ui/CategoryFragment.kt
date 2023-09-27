@@ -24,7 +24,7 @@ class CategoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCategoryBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -42,14 +42,13 @@ class CategoryFragment : Fragment() {
         val categoryAdapter = CategoryAdapter(emptyList(), viewmodel)
         binding.categoryRV.adapter = categoryAdapter
 
-        // filter desired category when loading data
-        viewmodel.donation.observe(viewLifecycleOwner) { donations ->
+        // observe livedata
+        viewmodel.donations.observe(viewLifecycleOwner) { donations ->
             val categoryDonation = donations.filter { it.category == selectedCategory }
             categoryAdapter.dataset = categoryDonation
             categoryAdapter.notifyDataSetChanged()
         }
 
-        // setup click on Recyclerview item to navigate show appropriate details in DetailFragement
         binding.categoryRV.addOnItemClickListener { position ->
             val selectedCategory = arguments?.getString("selectedCategory")
             val navController = findNavController()
@@ -60,13 +59,11 @@ class CategoryFragment : Fragment() {
             navController.navigate(action)
         }
 
-        // setup of FAB to navigate to AddDonationFragment
         binding.addBTN.setOnClickListener() {
             val navController = findNavController()
             navController.navigate(CategoryFragmentDirections.actionCategoryFragmentToAddDonationFragment())
         }
     }
-
 }
 
 // function adding a click listener to a RecyclerView item

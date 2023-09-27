@@ -95,7 +95,7 @@ class HomeAdapter(
                 )
 
                 R.string.categoryTitleInfrastructure -> HomeFragmentDirections.actionHomeFragmentToCategoryFragment(
-                    "Infrastuktur"
+                    "Infrastruktur"
                 )
 
                 else -> null

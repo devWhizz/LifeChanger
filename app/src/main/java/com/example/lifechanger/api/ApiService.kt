@@ -1,6 +1,6 @@
 package com.example.lifechanger.api
 
-import com.example.lifechanger.data.model.Donation
+import com.example.lifechanger.data.model.Quotes
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -23,9 +23,9 @@ private val retrofit = Retrofit.Builder()
 
 interface ApiService {
 
-    //GET method to load API parameters saved in dataclass (Donation)
-    @GET("donations")
-    suspend fun getDonation(): List<Donation>
+    //GET method to load API parameters saved in dataclass (Quotes)
+    @GET("quotes")
+    suspend fun getQuotes(): List<Quotes>
 
 
 }

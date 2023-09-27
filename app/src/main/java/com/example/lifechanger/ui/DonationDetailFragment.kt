@@ -25,7 +25,7 @@ class DonationDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDonationDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,7 +46,7 @@ class DonationDetailFragment : Fragment() {
                     (activity as MainActivity).updateToolbarTitleDetail(donation.title)
 
                     binding.donationTitleDetailTV.text = donation.title
-                    binding.donationCompanyDetailTV.text = donation.company
+                    binding.donationCompanyDetailTV.text = donation.creator
 
                     // use Coil to load images
                     binding.donationImageDetailIV.load(

@@ -14,11 +14,15 @@ import com.example.lifechanger.R
 import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.data.model.Donation
 import com.example.lifechanger.databinding.FragmentAddDonationBinding
+import com.google.firebase.firestore.FirebaseFirestore
+import java.util.UUID
 
 class AddDonationFragment : Fragment() {
 
     private lateinit var binding: FragmentAddDonationBinding
     private val viewmodel: SharedViewModel by activityViewModels()
+
+    val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,12 +39,12 @@ class AddDonationFragment : Fragment() {
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.addDonation)
 
-        // Deklariere eine Variable, um den ausgewählten RadioButton-Titel zu speichern
+        // declare variable to store selected RadioButton title
         var selectedCategoryTitle = ""
 
         // set ClickOnListener for RadioGroup
         binding.addDonationCategoryRB.setOnCheckedChangeListener { radioGroup, checkedId ->
-            // Check which option is selected
+            // check which option is selected
             when (checkedId) {
                 R.id.radioClimate -> selectedCategoryTitle =
                     getString(R.string.categoryTitleClimate)
@@ -83,51 +87,64 @@ class AddDonationFragment : Fragment() {
         }
 
         binding.addBTN.setOnClickListener {
-            // check if option is selected
-            if (selectedCategoryTitle.isNotEmpty()) {
-                val id = viewmodel.getTableCount().toLong() + 1
-                val category = selectedCategoryTitle
-                val title = binding.addDonationTitleTI.text.toString()
-                val description = binding.addDonationDescriptionTI.text.toString()
-                val creator = binding.addDonationCreatorTI.text.toString()
-                val image = binding.addDonationImageTI.text.toString()
-                val payment = binding.addAccountInfo.text.toString()
-
-                // insert data into database
-                viewmodel.insertToDb(
-                    Donation(
-                        id,
-                        category,
-                        title,
-                        description,
-                        creator,
-                        image,
-                        payment
-                    )
+            val selectedCategoryTitle = when {
+                binding.radioClimate.isChecked -> getString(R.string.categoryTitleClimate)
+                binding.radioWater.isChecked -> getString(R.string.categoryTitleWater)
+                binding.radioGarbage.isChecked -> getString(R.string.categoryTitleGarbage)
+                binding.radioDisaster.isChecked -> getString(R.string.categoryTitleDisaster)
+                binding.radioAnimalRights.isChecked -> getString(R.string.categoryTitleAnimalRights)
+                binding.radioSpeciesProtection.isChecked -> getString(R.string.categoryTitleSpeciesProtection)
+                binding.radioCats.isChecked -> getString(R.string.categoryTitleCats)
+                binding.radioDogs.isChecked -> getString(R.string.categoryTitleDogs)
+                binding.radioHorses.isChecked -> getString(R.string.categoryTitleHorses)
+                binding.radioKids.isChecked -> getString(R.string.categoryTitleKids)
+                binding.radioSeniors.isChecked -> getString(R.string.categoryTitleSeniors)
+                binding.radioHomeless.isChecked -> getString(R.string.categoryTitleHomeless)
+                binding.radioRefugees.isChecked -> getString(R.string.categoryTitleRefugees)
+                binding.radioInclusion.isChecked -> getString(R.string.categoryTitleInclusion)
+                binding.radioEducation.isChecked -> getString(R.string.categoryTitleEducation)
+                binding.radioInfrastructure.isChecked -> getString(R.string.categoryTitleInfrastructure)
+                else -> ""
+            }
+            // verify that all required fields are filled in
+            if (selectedCategoryTitle.isNotEmpty() &&
+                binding.addDonationTitleTI.text!!.isNotBlank() &&
+                binding.addDonationDescriptionTI.text!!.isNotBlank() &&
+                binding.addDonationCreatorTI.text!!.isNotBlank() &&
+                binding.addDonationImageTI.text!!.isNotBlank() &&
+                binding.addAccountInfo.text!!.isNotBlank()
+            ) {
+                // create new donation object
+                val donation = Donation(
+                    id = UUID.randomUUID().toString(),
+                    category = selectedCategoryTitle,
+                    title = binding.addDonationTitleTI.text.toString(),
+                    description = binding.addDonationDescriptionTI.text.toString(),
+                    creator = binding.addDonationCreatorTI.text.toString(),
+                    image = binding.addDonationImageTI.text.toString(),
+                    payment = binding.addAccountInfo.text.toString()
                 )
 
-                // navigate to category fragment when donation was added
-                navigateToCategoryFragment(category)
+                // add donation to Firebase Firestore
+                firestore.collection("donations")
+                    .add(donation)
+                    .addOnSuccessListener { documentReference ->
+                        val donationId = documentReference.id
+                        // navigate back to Categoryfragment showing appropriate content
+                        navigateToCategoryFragment(selectedCategoryTitle)
 
-                // create and setup dialog
-                val alertDialog = AlertDialog.Builder(requireContext())
-                alertDialog.setTitle("Gratulation")
-                alertDialog.setMessage("Ihre Spendenaktion wurde erfolgreich erstellt!")
-                alertDialog.setPositiveButton("OK") { dialog, which ->
-                    dialog.dismiss()
-                }
-                alertDialog.show()
-
+                        // display success message
+                        showSuccessDialog()
+                    }
+                    .addOnFailureListener {
+                        // display error message if not all required fields are filled in
+                        showErrorToast()
+                    }
             } else {
-                // show Toast if no category was selected
-                Toast.makeText(
-                    requireContext(),
-                    "Bitte wähle eine Kategorie aus",
-                    Toast.LENGTH_SHORT
-                ).show()
+                // display error message if not all required fields are filled in
+                showErrorToast()
             }
         }
-
 
         // set OnClickListener do navigate back (when canceled)
         binding.cancelBTN.setOnClickListener {
@@ -141,5 +158,23 @@ class AddDonationFragment : Fragment() {
         val action =
             AddDonationFragmentDirections.actionAddDonationFragmentToCategoryFragment(category)
         navController.navigate(action)
+    }
+
+    private fun showSuccessDialog() {
+        val alertDialog = AlertDialog.Builder(requireContext())
+        alertDialog.setTitle("Gratulation")
+        alertDialog.setMessage("Ihre Spendenaktion wurde erfolgreich erstellt!")
+        alertDialog.setPositiveButton("OK") { dialog, which ->
+            dialog.dismiss()
+        }
+        alertDialog.show()
+    }
+
+    private fun showErrorToast() {
+        Toast.makeText(
+            requireContext(),
+            "Bitte füllen Sie alle Felder aus!",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 }

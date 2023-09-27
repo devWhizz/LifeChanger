@@ -32,7 +32,7 @@ class CategoryAdapter(
 
         //  settings to implement objects in ViewHolder
         holder.binding.detailTitleTV.text = item.title
-        holder.binding.detailCompanyTV.text = item.company
+        holder.binding.detailCompanyTV.text = item.creator
 
         //use Coil to load images
         holder.binding.detailImageIV.load(item.image.toUri().buildUpon().scheme("https").build()) {
