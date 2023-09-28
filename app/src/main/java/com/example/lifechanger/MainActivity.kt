@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.homeFragment)
                 }
 
-                R.id.addDonationFragment -> {
-                    navController.navigate(R.id.addDonationFragment)
+                R.id.favoritesFragment -> {
+                    navController.navigate(R.id.favoritesFragment)
                 }
 
                 else -> {

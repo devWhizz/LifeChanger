@@ -3,13 +3,13 @@
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/baseline_add_24"
+        android:icon="@drawable/home_icon"
         android:drawable="@color/main"
         android:title="" />
 
     <item
-        android:id="@+id/addDonationFragment"
-        android:icon="@drawable/baseline_add_24"
+        android:id="@+id/favoritesFragment"
+        android:icon="@drawable/favorite_icon"
         android:drawable="@color/main"
         android:title="" />
 

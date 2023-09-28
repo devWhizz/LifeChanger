@@ -14,16 +14,17 @@
 
         <TextView
             android:id="@+id/detailTitleTV"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"
-            android:textAppearance="@style/HeadingMainText"
             android:text="Spendenaktion"
+            android:textAppearance="@style/HeadingMainText"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/space"
-            app:layout_constraintStart_toEndOf="@+id/detailImageIV" />
+            app:layout_constraintStart_toEndOf="@+id/detailImageIV"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
             android:id="@+id/detailImageIV"

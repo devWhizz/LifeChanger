@@ -11,223 +11,134 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/addDonationCategorySpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="18sp"
+            android:paddingTop="20dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="20dp"
+            android:paddingStart="8dp"
+            android:dropDownVerticalOffset="90dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/spinner_background"
+            android:entries="@array/donation_categories" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addDonationTitleTIL"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="48dp"
-            android:scrollbars="none"
-            app:layout_constraintStart_toStartOf="@+id/addDonationTitleTI"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginEnd="32dp"
+            android:textSize="18sp"
+            app:boxStrokeColor="@color/main"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/addDonationCategorySpinner">
 
-            <RadioGroup
-                android:id="@+id/addDonationCategoryRB"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:hint="@string/addTitle"
+                android:id="@+id/addDonationTitleTI" />
 
-                <RadioButton
-                    android:id="@+id/radioClimate"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleClimate" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-                <RadioButton
-                    android:id="@+id/radioWater"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleWater" />
-
-                <RadioButton
-                    android:id="@+id/radioGarbage"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleGarbage" />
-
-                <RadioButton
-                    android:id="@+id/radioDisaster"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleDisaster" />
-
-                <RadioButton
-                    android:id="@+id/radioAnimalRights"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleAnimalRights" />
-
-                <RadioButton
-                    android:id="@+id/radioSpeciesProtection"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleSpeciesProtection" />
-
-                <RadioButton
-                    android:id="@+id/radioCats"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleCats" />
-
-                <RadioButton
-                    android:id="@+id/radioDogs"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleDogs" />
-
-                <RadioButton
-                    android:id="@+id/radioHorses"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleHorses" />
-
-                <RadioButton
-                    android:id="@+id/radioKids"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleKids" />
-
-                <RadioButton
-                    android:id="@+id/radioSeniors"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleSeniors" />
-
-                <RadioButton
-                    android:id="@+id/radioHomeless"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleHomeless" />
-
-                <RadioButton
-                    android:id="@+id/radioRefugees"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleRefugees" />
-
-                <RadioButton
-                    android:id="@+id/radioInclusion"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleInclusion" />
-
-                <RadioButton
-                    android:id="@+id/radioEducation"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleEducation" />
-
-                <RadioButton
-                    android:id="@+id/radioInfrastructure"
-                    style="@style/CopyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/categoryTitleInfrastructure" />
-
-            </RadioGroup>
-        </HorizontalScrollView>
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/addDonationTitleTI"
-            style="@style/CopyText"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addDonationDescriptionTIL"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/addTitle"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:textSize="18sp"
+            app:boxStrokeColor="@color/main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+            app:layout_constraintTop_toBottomOf="@+id/addDonationTitleTIL">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/addDonationDescriptionTI"
-            style="@style/CopyText"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/addDescription"
+                android:id="@+id/addDonationDescriptionTI" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addDonationCreatorTIL"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/addDescription"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/addDonationTitleTI"
-            app:layout_constraintTop_toBottomOf="@+id/addDonationTitleTI" />
-
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/addDonationCreatorTI"
-            style="@style/CopyText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/addCreator"
-            android:textSize="18sp"
+            app:boxStrokeColor="@color/main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addDonationDescriptionTI" />
+            app:layout_constraintTop_toBottomOf="@+id/addDonationDescriptionTIL">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/addDonationImageTI"
-            style="@style/CopyText"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/addCreator"
+                android:id="@+id/addDonationCreatorTI" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addDonationImageTIL"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/addImage"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:textSize="18sp"
+            app:boxStrokeColor="@color/main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addDonationCreatorTI" />
+            app:layout_constraintTop_toBottomOf="@+id/addDonationCreatorTIL">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/addAccountInfo"
-            style="@style/CopyText"
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/addImage"
+                android:id="@+id/addDonationImageTI" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/addAccountInfoTIL"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="32dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:hint="@string/addAccountInfo"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:textSize="18sp"
+            app:boxStrokeColor="@color/main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/addDonationImageTI" />
+            app:layout_constraintTop_toBottomOf="@+id/addDonationImageTIL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/addAccountInfo"
+                android:id="@+id/addAccountInfo" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/cancelBTN"
@@ -242,8 +153,8 @@
             android:textColor="@color/black"
             app:backgroundTint="@color/third"
             app:layout_constraintEnd_toStartOf="@+id/addBTN"
-            app:layout_constraintStart_toStartOf="@+id/addDonationImageTI"
-            app:layout_constraintTop_toBottomOf="@+id/addAccountInfo" />
+            app:layout_constraintStart_toStartOf="@+id/addAccountInfoTIL"
+            app:layout_constraintTop_toBottomOf="@+id/addAccountInfoTIL" />
 
         <Button
             android:id="@+id/addBTN"
@@ -256,9 +167,8 @@
             android:text="@string/addDonation"
             android:textColor="@color/white"
             app:backgroundTint="@color/second"
-            app:layout_constraintEnd_toEndOf="@+id/addDonationImageTI"
-            app:layout_constraintTop_toBottomOf="@+id/addAccountInfo" />
-
+            app:layout_constraintEnd_toEndOf="@+id/addAccountInfoTIL"
+            app:layout_constraintTop_toBottomOf="@+id/addAccountInfoTIL" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

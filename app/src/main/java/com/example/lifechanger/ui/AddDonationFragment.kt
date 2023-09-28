@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -39,73 +41,29 @@ class AddDonationFragment : Fragment() {
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.addDonation)
 
-        // declare variable to store selected RadioButton title
+        // declare variable to store selected Spinner title
         var selectedCategoryTitle = ""
 
-        // set ClickOnListener for RadioGroup
-        binding.addDonationCategoryRB.setOnCheckedChangeListener { radioGroup, checkedId ->
-            // check which option is selected
-            when (checkedId) {
-                R.id.radioClimate -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleClimate)
+        // initialize Spinner
+        val categorySpinner = view.findViewById<Spinner>(R.id.addDonationCategorySpinner)
 
-                R.id.radioWater -> selectedCategoryTitle = getString(R.string.categoryTitleWater)
-                R.id.radioGarbage -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleGarbage)
+        // set ClickOnListener for Spinner
+        categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parentView: AdapterView<*>?,
+                selectedItemView: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedCategoryTitle = parentView?.getItemAtPosition(position).toString()
+            }
 
-                R.id.radioDisaster -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleDisaster)
-
-                R.id.radioAnimalRights -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleAnimalRights)
-
-                R.id.radioSpeciesProtection -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleSpeciesProtection)
-
-                R.id.radioCats -> selectedCategoryTitle = getString(R.string.categoryTitleCats)
-                R.id.radioDogs -> selectedCategoryTitle = getString(R.string.categoryTitleDogs)
-                R.id.radioHorses -> selectedCategoryTitle = getString(R.string.categoryTitleHorses)
-                R.id.radioKids -> selectedCategoryTitle = getString(R.string.categoryTitleKids)
-                R.id.radioSeniors -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleSeniors)
-
-                R.id.radioHomeless -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleHomeless)
-
-                R.id.radioRefugees -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleRefugees)
-
-                R.id.radioInclusion -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleInclusion)
-
-                R.id.radioEducation -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleEducation)
-
-                R.id.radioInfrastructure -> selectedCategoryTitle =
-                    getString(R.string.categoryTitleInfrastructure)
+            override fun onNothingSelected(p0: AdapterView<*>?) {
             }
         }
 
         binding.addBTN.setOnClickListener {
-            val selectedCategoryTitle = when {
-                binding.radioClimate.isChecked -> getString(R.string.categoryTitleClimate)
-                binding.radioWater.isChecked -> getString(R.string.categoryTitleWater)
-                binding.radioGarbage.isChecked -> getString(R.string.categoryTitleGarbage)
-                binding.radioDisaster.isChecked -> getString(R.string.categoryTitleDisaster)
-                binding.radioAnimalRights.isChecked -> getString(R.string.categoryTitleAnimalRights)
-                binding.radioSpeciesProtection.isChecked -> getString(R.string.categoryTitleSpeciesProtection)
-                binding.radioCats.isChecked -> getString(R.string.categoryTitleCats)
-                binding.radioDogs.isChecked -> getString(R.string.categoryTitleDogs)
-                binding.radioHorses.isChecked -> getString(R.string.categoryTitleHorses)
-                binding.radioKids.isChecked -> getString(R.string.categoryTitleKids)
-                binding.radioSeniors.isChecked -> getString(R.string.categoryTitleSeniors)
-                binding.radioHomeless.isChecked -> getString(R.string.categoryTitleHomeless)
-                binding.radioRefugees.isChecked -> getString(R.string.categoryTitleRefugees)
-                binding.radioInclusion.isChecked -> getString(R.string.categoryTitleInclusion)
-                binding.radioEducation.isChecked -> getString(R.string.categoryTitleEducation)
-                binding.radioInfrastructure.isChecked -> getString(R.string.categoryTitleInfrastructure)
-                else -> ""
-            }
+
             // verify that all required fields are filled in
             if (selectedCategoryTitle.isNotEmpty() &&
                 binding.addDonationTitleTI.text!!.isNotBlank() &&
@@ -130,13 +88,14 @@ class AddDonationFragment : Fragment() {
                     .add(donation)
                     .addOnSuccessListener { documentReference ->
                         val donationId = documentReference.id
-                        // navigate back to Categoryfragment showing appropriate content
+
+                        // navigate back to CategoryFragment showing appropriate content
                         navigateToCategoryFragment(selectedCategoryTitle)
 
                         // display success message
                         showSuccessDialog()
                     }
-                    .addOnFailureListener {
+                    .addOnFailureListener { e ->
                         // display error message if not all required fields are filled in
                         showErrorToast()
                     }

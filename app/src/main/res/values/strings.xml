@@ -28,6 +28,8 @@
 
     <string name="learn_more">Zu den Spendenaktionen</string>
     <string name="donateNow">Jetzt spenden</string>
+    <string name="favorites">Deine Favoriten</string>
+
     <string name="shareText">Schau dir diese Spendenaktion an:</string>
     <string name="addDonation">Spendenaktion erstellen</string>
     <string name="addCategory">Kategorie</string>
@@ -37,5 +39,24 @@
     <string name="addImage">Bild hochladen</string>
     <string name="addAccountInfo">PayPal Adresse</string>
     <string name="payment">Bezahlung</string>
+
+    <string-array name="donation_categories">
+        <item>Klima</item>
+        <item>Gewässer</item>
+        <item>Müll</item>
+        <item>Katastrophen</item>
+        <item>Tierschutz</item>
+        <item>Artenschutz</item>
+        <item>Katzen</item>
+        <item>Hunde</item>
+        <item>Pferde</item>
+        <item>Kinder</item>
+        <item>Senioren</item>
+        <item>Obdachlose</item>
+        <item>Flüchtlinge</item>
+        <item>Inklusion</item>
+        <item>Bildung</item>
+        <item>Infrastruktur</item>
+    </string-array>
 
 </resources>

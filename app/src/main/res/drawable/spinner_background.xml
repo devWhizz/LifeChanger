@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/transparent" />
+    <item>
+        <shape>
+            <solid android:color="#00FFFFFF" />
+            <corners android:radius="4dp" />
+            <stroke
+                android:width="2dp"
+                android:color="@color/main" />
+        </shape>
+    </item>
+
+    <item
+        android:width="30dp"
+        android:height="30dp"
+        android:drawable="@drawable/dropdown_arrow"
+        android:gravity="end|center_vertical"
+        android:right="8dp" />
+</layer-list>
