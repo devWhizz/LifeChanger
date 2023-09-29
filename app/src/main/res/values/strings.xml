@@ -26,19 +26,18 @@
     <string name="categoryTitlePeople">Menschen</string>
     <string name="categoryTitleDevelopmentAid">Entwicklungshilfe</string>
 
-    <string name="learn_more">Zu den Spendenaktionen</string>
-    <string name="donateNow">Jetzt spenden</string>
-    <string name="favorites">Deine Favoriten</string>
+    <string name="favorites">Favoriten</string>
+    <string name="payment">Bezahlung</string>
+    <string name="settings">Einstellungen</string>
 
     <string name="shareText">Schau dir diese Spendenaktion an:</string>
     <string name="addDonation">Spendenaktion erstellen</string>
     <string name="addCategory">Kategorie</string>
-    <string name="addTitle">Überschrift</string>
-    <string name="addDescription">Beschreibung</string>
-    <string name="addCreator">Organisation / Name des Erstellers</string>
-    <string name="addImage">Bild hochladen</string>
-    <string name="addAccountInfo">PayPal Adresse</string>
-    <string name="payment">Bezahlung</string>
+    <string name="addTitle">Titel</string>
+    <string name="addDescription">Projektbeschreibung</string>
+    <string name="addCreator">Initiator/-in</string>
+    <string name="addImage">Bild URL</string>
+    <string name="addAccountInfo">PayPal-Adresse</string>
 
     <string-array name="donation_categories">
         <item>Klima</item>
@@ -58,5 +57,7 @@
         <item>Bildung</item>
         <item>Infrastruktur</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

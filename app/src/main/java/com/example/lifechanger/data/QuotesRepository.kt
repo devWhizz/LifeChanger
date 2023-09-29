@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.lifechanger.api.Api
 import com.example.lifechanger.data.model.Quotes
+import com.example.lifechanger.db.QuotesDatabase
 
 class QuotesRepository(val quotesApi: Api, private val database: QuotesDatabase) {
 
@@ -18,7 +19,7 @@ class QuotesRepository(val quotesApi: Api, private val database: QuotesDatabase)
         try {
             val quotes = quotesApi.retrofitService.getQuotes()
             _quotes.value = quotes
-            insertQuotesIntoDatabase(quotes) // Füge die geladenen Zitate in die Datenbank ein
+            insertQuotesIntoDatabase(quotes)
         } catch (e: Exception) {
             Log.e("Repository", "Error while loading $e")
         }
@@ -41,5 +42,4 @@ class QuotesRepository(val quotesApi: Api, private val database: QuotesDatabase)
     fun getRandomEntry(): LiveData<Quotes> {
         return database.quotesDao.getRandomEntry()
     }
-
 }

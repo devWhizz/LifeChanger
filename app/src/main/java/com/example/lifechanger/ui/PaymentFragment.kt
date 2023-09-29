@@ -10,11 +10,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.R
 import com.example.lifechanger.SharedViewModel
-import com.example.lifechanger.databinding.FragmentFavoritesBinding
+import com.example.lifechanger.databinding.FragmentPaymentBinding
 
-class FavoritesFragment : Fragment() {
+class PaymentFragment : Fragment() {
 
-    private lateinit var binding: FragmentFavoritesBinding
+    private lateinit var binding: FragmentPaymentBinding
     private val viewmodel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -22,7 +22,7 @@ class FavoritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        binding = FragmentPaymentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -30,10 +30,10 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // set toolbar title
-        (activity as MainActivity).updateToolbarTitle(R.string.favorites)
+        (activity as MainActivity).updateToolbarTitle(R.string.payment)
 
         // set OnClickListener do navigate back (when canceled)
-        binding.cancelFavoritesFAB.setOnClickListener {
+        binding.cancelPaymentFAB.setOnClickListener {
             findNavController().navigateUp()
         }
     }

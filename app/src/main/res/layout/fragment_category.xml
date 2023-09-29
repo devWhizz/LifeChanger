@@ -7,11 +7,10 @@
     tools:context=".ui.CategoryFragment">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addBTN"
+        android:id="@+id/addFAB"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:layout_margin="16dp"
         app:maxImageSize="40dp"
         android:clickable="true"
         app:tint="@android:color/white"
@@ -20,9 +19,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-
-    <!-- recyclerView for List of elements in class -->
-    <!-- app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" > load viewstyle, f.e. horizontal -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categoryRV"
         android:layout_width="match_parent"

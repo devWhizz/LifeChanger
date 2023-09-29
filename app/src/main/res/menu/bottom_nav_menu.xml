@@ -13,4 +13,10 @@
         android:drawable="@color/main"
         android:title="" />
 
+    <item
+        android:id="@+id/settingsFragment"
+        android:icon="@drawable/settings_icon"
+        android:drawable="@color/main"
+        android:title="" />
+
 </menu>

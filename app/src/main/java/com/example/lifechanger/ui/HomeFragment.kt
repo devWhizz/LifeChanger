@@ -13,7 +13,6 @@ import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.adapter.HomeAdapter
 import com.example.lifechanger.databinding.FragmentHomeBinding
 
-
 class HomeFragment : Fragment() {
 
     private val viewmodel: SharedViewModel by activityViewModels()
@@ -37,16 +36,12 @@ class HomeFragment : Fragment() {
         viewmodel.environmentCategory.observe(viewLifecycleOwner) { environmentCategory ->
             binding.environmentRV.adapter = HomeAdapter(environmentCategory)
         }
-
-        // observe livedata to update changes in recyclerview
         viewmodel.animalCategory.observe(viewLifecycleOwner) { animalCategory ->
             binding.animalRV.adapter = HomeAdapter(animalCategory)
         }
-        // observe livedata to update changes in recyclerview
         viewmodel.peopleCategory.observe(viewLifecycleOwner) { peopleCategory ->
             binding.peopleRV.adapter = HomeAdapter(peopleCategory)
         }
-        //  observe livedata to update changes in recyclerview
         viewmodel.developmentAidCategory.observe(viewLifecycleOwner) { developmentAidCategory ->
             binding.developmentAidRV.adapter = HomeAdapter(developmentAidCategory)
         }

@@ -27,7 +27,6 @@ interface ApiService {
     @GET("quotes")
     suspend fun getQuotes(): List<Quotes>
 
-
 }
 
 // access retrofit services

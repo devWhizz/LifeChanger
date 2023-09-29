@@ -9,7 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.lifechanger.api.Api
 import com.example.lifechanger.data.CategoryRepository
 import com.example.lifechanger.data.QuotesRepository
-import com.example.lifechanger.data.getQuoteDatabase
+import com.example.lifechanger.db.getQuoteDatabase
 import com.example.lifechanger.data.model.Category
 import com.example.lifechanger.data.model.Donation
 import com.example.lifechanger.data.model.Quotes
@@ -63,7 +63,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
 
     // starting Coroutines to run processes while viewmodel is active
-    // load data from Firebase in repository
+    // load data from Firebase into repository
     private fun loadDonationsFromFirestore() {
         firestore.collection("donations")
             .addSnapshotListener { querySnapshot, e ->
@@ -79,7 +79,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                         donations.add(donation)
                     }
                 }
-                _donations.value = donations
+                _donations.value = donations.reversed()
             }
     }
 

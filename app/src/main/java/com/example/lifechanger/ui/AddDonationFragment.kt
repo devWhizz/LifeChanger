@@ -31,6 +31,10 @@ class AddDonationFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        // hide bottom menu on AddDonationFragment
+        (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.GONE
+
         binding = FragmentAddDonationBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,7 +66,7 @@ class AddDonationFragment : Fragment() {
             }
         }
 
-        binding.addBTN.setOnClickListener {
+        binding.addFAB.setOnClickListener {
 
             // verify that all required fields are filled in
             if (selectedCategoryTitle.isNotEmpty() &&
@@ -83,7 +87,7 @@ class AddDonationFragment : Fragment() {
                     payment = binding.addAccountInfo.text.toString()
                 )
 
-                // add donation to Firebase Firestore
+                // add donation to Firestore
                 firestore.collection("donations")
                     .add(donation)
                     .addOnSuccessListener { documentReference ->
@@ -95,7 +99,7 @@ class AddDonationFragment : Fragment() {
                         // display success message
                         showSuccessDialog()
                     }
-                    .addOnFailureListener { e ->
+                    .addOnFailureListener {
                         // display error message if not all required fields are filled in
                         showErrorToast()
                     }
@@ -106,7 +110,7 @@ class AddDonationFragment : Fragment() {
         }
 
         // set OnClickListener do navigate back (when canceled)
-        binding.cancelBTN.setOnClickListener {
+        binding.cancelAddingFAB.setOnClickListener {
             findNavController().navigateUp()
         }
     }
@@ -132,8 +136,15 @@ class AddDonationFragment : Fragment() {
     private fun showErrorToast() {
         Toast.makeText(
             requireContext(),
-            "Bitte füllen Sie alle Felder aus!",
+            "Bitte fülle alle Felder aus!",
             Toast.LENGTH_SHORT
         ).show()
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // show bottom menu when AddDonationFragment is destroyed
+        (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.VISIBLE
+    }
+
 }

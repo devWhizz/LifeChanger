@@ -11,7 +11,6 @@ import com.example.lifechanger.databinding.DonationdetailItemBinding
 
 class CategoryAdapter(
 
-    //  create val of type List to save data objects and show them in RecyclerView
     var dataset: List<Donation>,
     val viewmodel: SharedViewModel,
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {

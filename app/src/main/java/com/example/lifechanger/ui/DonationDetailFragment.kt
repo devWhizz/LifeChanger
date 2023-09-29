@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.lifechanger.MainActivity
@@ -40,7 +41,8 @@ class DonationDetailFragment : Fragment() {
         viewmodel.getDonationByCategory(category)
             .observe(viewLifecycleOwner, Observer { donations ->
                 if (donationIndex >= 0 && donationIndex < donations.size) {
-                    val donation = donations[donationIndex]
+                    val reversedIndex = donations.size - 1 - donationIndex
+                    val donation = donations[reversedIndex]
 
                     // set toolbar title
                     (activity as MainActivity).updateToolbarTitleDetail(donation.title)
@@ -54,6 +56,11 @@ class DonationDetailFragment : Fragment() {
                     )
 
                     binding.donationDescriptionDetailTV.text = donation.description
+
+                    binding.donateNowFAB.setOnClickListener() {
+                        val navController = findNavController()
+                        navController.navigate(DonationDetailFragmentDirections.actionDonationDetailFragmentToPaymentFragment())
+                    }
                 }
             })
     }

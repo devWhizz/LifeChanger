@@ -60,7 +60,7 @@ class CategoryRepository() {
             Category(
                 R.string.categoryTitleSeniors,
                 R.drawable.seniors
-            ),Category(
+            ), Category(
                 R.string.categoryTitleHomeless,
                 R.drawable.homeless
             ),

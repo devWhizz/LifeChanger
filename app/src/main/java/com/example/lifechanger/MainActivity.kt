@@ -38,6 +38,10 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.favoritesFragment)
                 }
 
+                R.id.settingsFragment -> {
+                    navController.navigate(R.id.settingsFragment)
+                }
+
                 else -> {
                     navController.navigateUp()
                 }

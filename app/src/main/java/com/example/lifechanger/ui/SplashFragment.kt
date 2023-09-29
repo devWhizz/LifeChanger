@@ -52,8 +52,8 @@ class SplashFragment : Fragment() {
 
     private fun animateLogo() {
         binding.logoIV.apply {
-            scaleX = 0.5f
-            scaleY = 0.5f
+            scaleX = 0f
+            scaleY = 0f
             alpha = 0f
 
             animate().apply {
@@ -77,20 +77,19 @@ class SplashFragment : Fragment() {
                     index++
                     handler.postDelayed(this, 100)
                 } else {
-                    // Starten der Navigation nach 2000 Millisekunden (2 Sekunden)
                     Handler(Looper.getMainLooper()).postDelayed({
                         navigateToHomeFragment()
                     }, 2000)
                 }
             }
-        }, 100)
+        }, 1000)
     }
 
     private fun navigateToHomeFragment() {
         val navController = findNavController()
         val options = NavOptions.Builder()
-            .setEnterAnim(R.anim.slide_in_left)
-            .setPopExitAnim(R.anim.slide_in_left)
+            .setEnterAnim(R.anim.zoom_in)
+            .setPopExitAnim(R.anim.zoom_in)
             .build()
         navController.navigate(
             SplashFragmentDirections.actionSplashFragmentToHomeFragment(),
@@ -100,7 +99,7 @@ class SplashFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // show toolbar and bottom menu when Splashfragment is destroyed
+        // show toolbar and bottom menu when SplashFragment is destroyed
         (activity as MainActivity?)?.findViewById<View>(R.id.toolBar)?.visibility = View.VISIBLE
         (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.VISIBLE
     }

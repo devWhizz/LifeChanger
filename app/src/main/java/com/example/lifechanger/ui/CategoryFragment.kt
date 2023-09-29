@@ -59,7 +59,7 @@ class CategoryFragment : Fragment() {
             navController.navigate(action)
         }
 
-        binding.addBTN.setOnClickListener() {
+        binding.addFAB.setOnClickListener() {
             val navController = findNavController()
             navController.navigate(CategoryFragmentDirections.actionCategoryFragmentToAddDonationFragment())
         }
@@ -68,7 +68,8 @@ class CategoryFragment : Fragment() {
 
 // function adding a click listener to a RecyclerView item
 fun RecyclerView.addOnItemClickListener(onItemClickListener: (Int) -> Unit) {
-    this.addOnChildAttachStateChangeListener(object : RecyclerView.OnChildAttachStateChangeListener {
+    this.addOnChildAttachStateChangeListener(object :
+        RecyclerView.OnChildAttachStateChangeListener {
         override fun onChildViewAttachedToWindow(view: View) {
             view.setOnClickListener {
                 val holder = getChildViewHolder(view)
