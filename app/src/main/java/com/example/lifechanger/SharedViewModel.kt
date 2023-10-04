@@ -79,7 +79,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                         donations.add(donation)
                     }
                 }
-                _donations.value = donations.reversed()
+                _donations.value = donations
             }
     }
 

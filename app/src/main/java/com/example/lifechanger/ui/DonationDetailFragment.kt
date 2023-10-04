@@ -41,8 +41,7 @@ class DonationDetailFragment : Fragment() {
         viewmodel.getDonationByCategory(category)
             .observe(viewLifecycleOwner, Observer { donations ->
                 if (donationIndex >= 0 && donationIndex < donations.size) {
-                    val reversedIndex = donations.size - 1 - donationIndex
-                    val donation = donations[reversedIndex]
+                    val donation = donations[donationIndex]
 
                     // set toolbar title
                     (activity as MainActivity).updateToolbarTitleDetail(donation.title)

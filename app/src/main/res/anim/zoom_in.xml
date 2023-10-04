@@ -7,5 +7,5 @@
         android:toYScale="1.0"
         android:pivotX="80%"
         android:pivotY="80%"
-        android:duration="200"/>
+        android:duration="800"/>
 </set>

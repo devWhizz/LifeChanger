@@ -25,6 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         val db = Firebase.firestore
 
+        // set up OnClickListener to navigate back to previous screen
+        binding.toolbarBackBTN.setOnClickListener {
+            navController.navigateUp()
+        }
+
         // set up BottomNavigationView with NavController
         binding.bottomNav.setupWithNavController(navController)
 
@@ -52,6 +57,11 @@ class MainActivity : AppCompatActivity() {
         // setup OnBackPressedCallback method
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                val currentDestinationId = navController.currentDestination?.id
+                if (currentDestinationId == R.id.homeFragment) {
+                    // prevent navigating back to SplashFragment
+                    return
+                }
                 Log.d("handleBackPressed", "Back Button pressed")
                 navController.navigateUp()
             }

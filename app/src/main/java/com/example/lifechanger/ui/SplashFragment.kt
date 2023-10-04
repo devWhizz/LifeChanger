@@ -26,11 +26,6 @@ class SplashFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
-        // hide toolbar and bottom menu on SplashFragment
-        (activity as MainActivity?)?.findViewById<View>(R.id.toolBar)?.visibility = View.GONE
-        (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.GONE
-
         binding = FragmentSplashBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -97,10 +92,22 @@ class SplashFragment : Fragment() {
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+        // hide toolbar and bottom menu on SplashFragment
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolBar)?.visibility = View.GONE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarTV)?.visibility = View.GONE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarBackBTN)?.visibility = View.GONE
+        (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.GONE
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         // show toolbar and bottom menu when SplashFragment is destroyed
         (activity as MainActivity?)?.findViewById<View>(R.id.toolBar)?.visibility = View.VISIBLE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarTV)?.visibility = View.VISIBLE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarBackBTN)?.visibility =
+            View.VISIBLE
         (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.VISIBLE
     }
 

@@ -21,17 +21,4 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/cancelSettingsFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:background="@drawable/rounded_button"
-        android:clickable="true"
-        android:src="@drawable/cancel_icon"
-        app:backgroundTint="@color/second"
-        app:maxImageSize="40dp"
-        app:tint="@color/white" />
-
 </FrameLayout>

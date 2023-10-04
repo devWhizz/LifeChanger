@@ -36,7 +36,7 @@
     <string name="addTitle">Titel</string>
     <string name="addDescription">Projektbeschreibung</string>
     <string name="addCreator">Initiator/-in</string>
-    <string name="addImage">Bild URL</string>
+    <string name="uploadImage">Bild auswählen</string>
     <string name="addAccountInfo">PayPal-Adresse</string>
 
     <string-array name="donation_categories">
