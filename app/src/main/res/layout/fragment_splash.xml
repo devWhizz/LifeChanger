@@ -27,7 +27,7 @@
         android:paddingEnd="32dp"
         android:text=""
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/dark"
         android:textSize="24sp"
         android:lineHeight="40sp"
         app:layout_constraintEnd_toEndOf="parent"

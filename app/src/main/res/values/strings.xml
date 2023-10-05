@@ -32,6 +32,7 @@
 
     <string name="shareText">Schau dir diese Spendenaktion an:</string>
     <string name="addDonation">Spendenaktion erstellen</string>
+    <string name="editDonation">Spendenaktion bearbeiten</string>
     <string name="addCategory">Kategorie</string>
     <string name="addTitle">Titel</string>
     <string name="addDescription">Projektbeschreibung</string>

@@ -17,12 +17,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/toolbarBackBTN"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:onClick="onIconClick"
+        android:src="@drawable/arrow_left_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarTV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbarTV"
+        app:tint="#FFFFFF" />
+
     <TextView
         android:id="@+id/toolbarTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MainHeadline"
         android:textAppearance="@style/ToolbarText"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/toolBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/toolBar"
@@ -48,24 +62,11 @@
         app:itemIconSize="30dp"
         app:itemBackground="@color/main"
         app:itemActiveIndicatorStyle="@style/Theme.Material3.DayNight"
-        app:itemIconTint="@color/white"
+        app:itemIconTint="@color/icon"
         app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu" />
-
-    <ImageView
-        android:id="@+id/toolbarBackBTN"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="16dp"
-        android:clickable="true"
-        android:onClick="onIconClick"
-        android:src="@drawable/arrow_left_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbarTV"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbarTV"
-        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

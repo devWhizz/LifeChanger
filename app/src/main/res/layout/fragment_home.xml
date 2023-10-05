@@ -57,7 +57,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/categoryTitleAnimal"
-                    android:textAppearance="@style/HeadingMainText" />
+                    android:textAppearance="@style/HeadingMainText"
+                    android:textColor="#000000"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/animalRV"
@@ -112,7 +113,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:text="@string/categoryTitleDevelopmentAid"
-                    android:textAppearance="@style/HeadingMainText" />
+                    android:textAppearance="@style/HeadingMainText"
+                    android:textColor="#000000"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/developmentAidRV"
@@ -135,7 +137,7 @@
         android:layout_gravity="bottom|end"
         android:background="@drawable/rounded_button"
         app:backgroundTint="@color/second"
-        app:tint="@color/white"
+        app:tint="@color/icon"
         android:layout_margin="16dp"
         app:maxImageSize="40dp"
         android:clickable="true"

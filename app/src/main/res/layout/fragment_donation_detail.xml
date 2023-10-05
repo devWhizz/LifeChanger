@@ -78,6 +78,6 @@
         android:src="@drawable/payment_icon"
         app:backgroundTint="@color/second"
         app:maxImageSize="40dp"
-        app:tint="@color/white" />
+        app:tint="@color/icon" />
 
 </FrameLayout>
