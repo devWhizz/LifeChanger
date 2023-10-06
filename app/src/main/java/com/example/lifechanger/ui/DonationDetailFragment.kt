@@ -46,8 +46,8 @@ class DonationDetailFragment : Fragment() {
                     // set toolbar title
                     (activity as MainActivity).updateToolbarTitleDetail(donation.title)
 
-                    binding.donationTitleDetailTV.text = donation.title
                     binding.donationCompanyDetailTV.text = donation.creator
+                    binding.donationTitleDetailTV.text = donation.title
 
                     // use Coil to load images
                     binding.donationImageDetailIV.load(
@@ -58,7 +58,7 @@ class DonationDetailFragment : Fragment() {
 
                     binding.donateNowFAB.setOnClickListener() {
                         val navController = findNavController()
-                        navController.navigate(DonationDetailFragmentDirections.actionDonationDetailFragmentToPaymentFragment())
+                        navController.navigate(DonationDetailFragmentDirections.actionDonationDetailFragmentToPaymentFragment(donation.title, donation.creator))
                     }
                 }
             })

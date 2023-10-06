@@ -5,8 +5,11 @@
     android:id="@+id/detailCV"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="10dp"
-    android:layout_margin="8dp">
+    android:layout_marginTop="8dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="16dp"
+    app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,8 +35,8 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/space"
-            app:layout_constraintStart_toEndOf="@+id/detailImageIV"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/detailImageIV" />
 
         <TextView
             android:id="@+id/detailCompanyTV"
@@ -41,11 +44,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Company"
+            android:text="Initiator/in"
             android:textAppearance="@style/CopyText"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/detailImageIV"
-            app:layout_constraintTop_toBottomOf="@+id/space"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/space" />
 
         <Space
             android:id="@+id/space"

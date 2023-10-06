@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.lifechanger.databinding.ActivityMainBinding
@@ -21,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // change color of status bar
-        window.statusBarColor = ContextCompat.getColor(this, R.color.main)
+        window.statusBarColor = this.getColor(R.color.main)
 
         val navHostFragment: NavHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment

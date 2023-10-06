@@ -1,5 +1,7 @@
 package com.example.lifechanger.ui
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,8 +28,28 @@ class PaymentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val donationTitle = arguments?.getString("donationTitle")
+        val donationCreator = arguments?.getString("donationCreator")
+
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.payment)
 
+        binding.creatorPayment.text = donationCreator
+        binding.titlePayment.text = donationTitle
+
+        binding.paypalBTN.setOnClickListener {
+
+            // TODO implement handover of Creator's Paypal address from Firebase
+            // val paypalWebUrl = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=$recipient&amount=$amount&currency_code=$currency"
+
+            val paypalWebUrl = "https://www.paypal.com/"
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(paypalWebUrl))
+            startActivity(browserIntent)
+        }
+
+        // set OnClickListener do navigate back (when canceled)
+        binding.cancelPaymentFAB.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 }
