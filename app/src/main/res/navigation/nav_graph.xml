@@ -90,11 +90,8 @@
         android:label="fragment_favorites"
         tools:layout="@layout/fragment_favorites" >
         <action
-            android:id="@+id/action_favoritesFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_favoritesFragment_self"
-            app:destination="@id/favoritesFragment" />
+            android:id="@+id/action_favoritesFragment_to_donationDetailFragment"
+            app:destination="@id/donationDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"

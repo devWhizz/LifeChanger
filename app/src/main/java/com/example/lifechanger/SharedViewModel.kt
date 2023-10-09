@@ -83,6 +83,26 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             }
     }
 
+    // livedata for liked items
+    private val _likedDonations = MutableLiveData<List<Donation>>()
+    val likedDonations: LiveData<List<Donation>> = _likedDonations
+
+    // add donations to Recyclerview
+    fun addToLikedDonations(donation: Donation) {
+        val currentLikedDonations = likedDonations.value ?: emptyList()
+        val updatedLikedDonations = currentLikedDonations.toMutableList()
+        updatedLikedDonations.add(donation)
+        _likedDonations.postValue(updatedLikedDonations)
+    }
+
+    // remove donations from Recyclerview
+    fun removeFromLikedDonations(donation: Donation) {
+        val currentLikedDonations = likedDonations.value ?: emptyList()
+        val updatedLikedDonations = currentLikedDonations.toMutableList()
+        updatedLikedDonations.remove(donation)
+        _likedDonations.postValue(updatedLikedDonations)
+    }
+
     // retrieve donations based on a specific category from the repository
     fun getDonationByCategory(category: String): LiveData<List<Donation>> {
         val liveData = MutableLiveData<List<Donation>>()

@@ -5,14 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.activityViewModels
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.R
+import com.example.lifechanger.SharedViewModel
+import com.example.lifechanger.adapter.CategoryAdapter
 import com.example.lifechanger.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
 
     private lateinit var binding: FragmentFavoritesBinding
+
+    // assign viewmodel to SharedViewModel
+    private val viewmodel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +33,17 @@ class FavoritesFragment : Fragment() {
 
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.favorites)
+
+        val categoryAdapter = CategoryAdapter(emptyList(), viewmodel)
+        binding.favoritesRV.adapter = categoryAdapter
+
+        // observe livedata
+        viewmodel.likedDonations.observe(viewLifecycleOwner) { likedDonations ->
+            categoryAdapter.updateData(likedDonations)
+        }
+
+        // TODO implement ClickListener for RV items
+//        binding.favoritesRV.addOnItemClickListener {}
 
     }
 }

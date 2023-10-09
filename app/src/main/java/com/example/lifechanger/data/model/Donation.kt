@@ -8,6 +8,7 @@ data class Donation (
     val description: String = "",
     val creator: String = "",
     val image: String = "",
-    val payment: String = ""
+    val payment: String = "",
+    var isLiked: Boolean = false
 
 )

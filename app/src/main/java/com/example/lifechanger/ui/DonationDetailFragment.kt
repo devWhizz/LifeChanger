@@ -56,6 +56,11 @@ class DonationDetailFragment : Fragment() {
 
                     binding.donationDescriptionDetailTV.text = donation.description
 
+
+                    // TODO implement like function
+//                    binding.favoriteBTN.setOnClickListener()
+
+
                     binding.donateNowFAB.setOnClickListener() {
                         val navController = findNavController()
                         navController.navigate(DonationDetailFragmentDirections.actionDonationDetailFragmentToPaymentFragment(donation.title, donation.creator))

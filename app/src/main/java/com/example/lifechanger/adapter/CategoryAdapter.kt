@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.example.lifechanger.R
 import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.data.model.Donation
 import com.example.lifechanger.databinding.DonationdetailItemBinding
@@ -35,7 +36,36 @@ class CategoryAdapter(
 
         //use Coil to load images
         holder.binding.detailImageIV.load(item.image.toUri().buildUpon().scheme("https").build()) {
+
+            // set like status
+            if (item.isLiked) {
+                // item is liked
+                holder.binding.likeBTN.setImageResource(R.drawable.favorite_icon)
+            } else {
+                // item isn't liked
+                holder.binding.likeBTN.setImageResource(R.drawable.favorite_blank_icon)
+            }
+
+            // set clicklistener on like button
+            holder.binding.likeBTN.setOnClickListener {
+                // change status
+                item.isLiked = !item.isLiked
+                notifyDataSetChanged()
+
+                // add or remove liked items
+                if (item.isLiked) {
+                    viewmodel.addToLikedDonations(item)
+                } else {
+                    viewmodel.removeFromLikedDonations(item)
+                }
+            }
         }
+    }
+
+    // update data in adapter for liked items
+    fun updateData(newData: List<Donation>) {
+        dataset = newData
+        notifyDataSetChanged()
     }
 
     //  return size of elements in dataset (list elements)

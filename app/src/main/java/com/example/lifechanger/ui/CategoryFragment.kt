@@ -66,7 +66,7 @@ class CategoryFragment : Fragment() {
     }
 }
 
-// function adding a click listener to a RecyclerView item
+// function adding a clicklistener to a RecyclerView item
 fun RecyclerView.addOnItemClickListener(onItemClickListener: (Int) -> Unit) {
     this.addOnChildAttachStateChangeListener(object :
         RecyclerView.OnChildAttachStateChangeListener {
