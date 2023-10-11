@@ -28,12 +28,6 @@
         android:name="com.example.lifechanger.ui.DonationDetailFragment"
         android:label="fragment_donation_detail"
         tools:layout="@layout/fragment_donation_detail" >
-        <argument
-            android:name="donationIndex"
-            app:argType="integer" />
-        <argument
-            android:name="category"
-            app:argType="string" />
         <action
             android:id="@+id/action_donationDetailFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
@@ -43,6 +37,12 @@
         <action
             android:id="@+id/action_donationDetailFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <argument
+            android:name="donationIndex"
+            app:argType="integer" />
+        <argument
+            android:name="category"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/addDonationFragment"

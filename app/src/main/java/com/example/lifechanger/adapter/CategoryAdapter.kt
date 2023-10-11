@@ -38,7 +38,7 @@ class CategoryAdapter(
         holder.binding.detailImageIV.load(item.image.toUri().buildUpon().scheme("https").build()) {
 
             // set like status
-            if (item.isLiked) {
+            if (viewmodel.isLiked(item.id)) {
                 // item is liked
                 holder.binding.likeBTN.setImageResource(R.drawable.favorite_icon)
             } else {

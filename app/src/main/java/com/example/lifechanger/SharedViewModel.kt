@@ -1,6 +1,8 @@
 package com.example.lifechanger
 
 import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -28,6 +30,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     // create instances to access data from repository
     val donation = repositoryQuotesApi.getAllQuotesFromDatabase()
+
+    private val sharedPreferences: SharedPreferences =
+        application.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
 
     init {
         loadDonationsFromFirestore()
@@ -87,20 +92,44 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val _likedDonations = MutableLiveData<List<Donation>>()
     val likedDonations: LiveData<List<Donation>> = _likedDonations
 
-    // add donations to Recyclerview
+    // add liked donations to Recyclerview
     fun addToLikedDonations(donation: Donation) {
+        sharedPreferences.edit()
+            .putBoolean(donation.id, true)
+            .apply()
+
         val currentLikedDonations = likedDonations.value ?: emptyList()
         val updatedLikedDonations = currentLikedDonations.toMutableList()
         updatedLikedDonations.add(donation)
         _likedDonations.postValue(updatedLikedDonations)
     }
 
-    // remove donations from Recyclerview
+    // remove liked donations to Recyclerview
     fun removeFromLikedDonations(donation: Donation) {
+        sharedPreferences.edit()
+            .putBoolean(donation.id, false)
+            .apply()
+
         val currentLikedDonations = likedDonations.value ?: emptyList()
         val updatedLikedDonations = currentLikedDonations.toMutableList()
         updatedLikedDonations.remove(donation)
         _likedDonations.postValue(updatedLikedDonations)
+    }
+
+    fun isLiked(donationId: String): Boolean {
+        return sharedPreferences.getBoolean(donationId, false)
+    }
+
+    fun getLikedDonationIds(): Set<String> {
+        return sharedPreferences.all
+            .filter { it.value as Boolean }
+            .map { it.key }
+            .toSet()
+    }
+
+    fun getDonationsByIds(ids: Set<String>): List<Donation> {
+        return donations.value.orEmpty()
+            .filter { it.id in ids }
     }
 
     // retrieve donations based on a specific category from the repository

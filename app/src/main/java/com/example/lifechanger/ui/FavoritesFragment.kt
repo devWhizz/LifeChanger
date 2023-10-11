@@ -37,10 +37,17 @@ class FavoritesFragment : Fragment() {
         val categoryAdapter = CategoryAdapter(emptyList(), viewmodel)
         binding.favoritesRV.adapter = categoryAdapter
 
-        // observe livedata
+        // observe livedata of liked donations
         viewmodel.likedDonations.observe(viewLifecycleOwner) { likedDonations ->
             categoryAdapter.updateData(likedDonations)
         }
+
+        // get liked donations from SharedPreferences
+        val likedDonationIds = viewmodel.getLikedDonationIds()
+        val likedDonations = viewmodel.getDonationsByIds(likedDonationIds)
+
+        // display liked donations in RecyclerView (FavoritesFragment)
+        categoryAdapter.updateData(likedDonations)
 
         // TODO implement ClickListener for RV items
 //        binding.favoritesRV.addOnItemClickListener {}
