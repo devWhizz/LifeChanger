@@ -35,29 +35,34 @@ class CategoryAdapter(
         holder.binding.detailCompanyTV.text = item.creator
 
         //use Coil to load images
-        holder.binding.detailImageIV.load(item.image.toUri().buildUpon().scheme("https").build()) {
+        holder.binding.detailImageIV.load(item.image.toUri().buildUpon().scheme("https").build())
 
-            // set like status
-            if (viewmodel.isLiked(item.id)) {
-                // item is liked
+        // set like status
+        if (viewmodel.isLiked(item.id)) {
+            // item is liked
+            holder.binding.likeBTN.setImageResource(R.drawable.favorite_icon)
+        } else {
+            // item isn't liked
+            holder.binding.likeBTN.setImageResource(R.drawable.favorite_blank_icon)
+        }
+
+        // set clicklistener on like button
+        holder.binding.likeBTN.setOnClickListener {
+            // change status
+            item.isLiked = !item.isLiked
+
+            // update symbol based in new status
+            if (item.isLiked) {
                 holder.binding.likeBTN.setImageResource(R.drawable.favorite_icon)
             } else {
-                // item isn't liked
                 holder.binding.likeBTN.setImageResource(R.drawable.favorite_blank_icon)
             }
 
-            // set clicklistener on like button
-            holder.binding.likeBTN.setOnClickListener {
-                // change status
-                item.isLiked = !item.isLiked
-                notifyDataSetChanged()
-
-                // add or remove liked items
-                if (item.isLiked) {
-                    viewmodel.addToLikedDonations(item)
-                } else {
-                    viewmodel.removeFromLikedDonations(item)
-                }
+            // add or remove liked items
+            if (item.isLiked) {
+                viewmodel.addToLikedDonations(item)
+            } else {
+                viewmodel.removeFromLikedDonations(item)
             }
         }
     }

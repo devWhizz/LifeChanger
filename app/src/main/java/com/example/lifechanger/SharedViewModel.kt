@@ -29,7 +29,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val repositoryQuotesApi = QuotesRepository(Api, quoteDatabase)
 
     // create instances to access data from repository
-    val donation = repositoryQuotesApi.getAllQuotesFromDatabase()
+//    val donation = repositoryQuotesApi.getAllQuotesFromDatabase()
 
     private val sharedPreferences: SharedPreferences =
         application.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
@@ -88,32 +88,43 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             }
     }
 
-    // livedata for liked items
-    private val _likedDonations = MutableLiveData<List<Donation>>()
-    val likedDonations: LiveData<List<Donation>> = _likedDonations
+    // liked donations
+    private val likedDonations = MutableLiveData<List<Donation>>()
+//    private val likedDonations: LiveData<List<Donation>> = _likedDonations
 
-    // add liked donations to Recyclerview
+    // liveData to notify FavoritesFragment about changes in liked donations
+    private val _likedDonationsUpdated = MutableLiveData<Unit>()
+    val likedDonationsUpdated: LiveData<Unit> get() = _likedDonationsUpdated
+
+    // add liked donations to Recyclerview (FavoritesFragment)
     fun addToLikedDonations(donation: Donation) {
         sharedPreferences.edit()
             .putBoolean(donation.id, true)
             .apply()
 
+        Log.d("SharedViewModel", "Donation with ID ${donation.id} was added to liked donations.")
+
         val currentLikedDonations = likedDonations.value ?: emptyList()
         val updatedLikedDonations = currentLikedDonations.toMutableList()
         updatedLikedDonations.add(donation)
-        _likedDonations.postValue(updatedLikedDonations)
+        likedDonations.value = updatedLikedDonations
     }
 
-    // remove liked donations to Recyclerview
+    // remove liked donations to Recyclerview (FavoritesFragment)
     fun removeFromLikedDonations(donation: Donation) {
         sharedPreferences.edit()
             .putBoolean(donation.id, false)
             .apply()
 
+        Log.d("SharedViewModel", "Donation with ID ${donation.id} was removed from liked donations.")
+
         val currentLikedDonations = likedDonations.value ?: emptyList()
         val updatedLikedDonations = currentLikedDonations.toMutableList()
         updatedLikedDonations.remove(donation)
-        _likedDonations.postValue(updatedLikedDonations)
+        likedDonations.value = updatedLikedDonations
+
+        // notify FavoritesFragment about changes
+        _likedDonationsUpdated.value = Unit
     }
 
     fun isLiked(donationId: String): Boolean {
