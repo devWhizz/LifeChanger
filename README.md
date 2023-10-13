@@ -1,6 +1,6 @@
 ## LifeChanger | Donation App
 
-This app allows users to discover, support, and donate to various causes and charitable organizations as well as creating their own donations.
+This app allows users to discover, support and donate to various causes and charitable organizations as well as creating their own donations.
 
 ### Table of Contents
 - [Getting Started](#getting-started)
@@ -77,5 +77,5 @@ Users can make a donation to support a cause they care about:
 
 ### Contributing
 
-Please report any issues or bugs through our [Issue Tracker](https://github.com/devWhizz/LifeChanger/issues).
+Please report any issues or bugs through the [Issue Tracker](https://github.com/devWhizz/LifeChanger/issues).
 
