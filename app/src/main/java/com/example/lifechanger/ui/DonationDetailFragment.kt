@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
 import com.example.lifechanger.MainActivity
+import com.example.lifechanger.R
 import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.databinding.FragmentDonationDetailBinding
 
@@ -34,15 +35,12 @@ class DonationDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val donationIndex = args.donationIndex
-        val category = args.category
+        val donationId = args.donationId
 
         // select correct donation based on the category and index passed to display details in fragment
-        viewmodel.getDonationByCategory(category)
-            .observe(viewLifecycleOwner, Observer { donations ->
-                if (donationIndex >= 0 && donationIndex < donations.size) {
-                    val donation = donations[donationIndex]
-
+        viewmodel.getDonationById(donationId)
+            .observe(viewLifecycleOwner, Observer { donation ->
+                if (donation != null) {
                     // set toolbar title
                     (activity as MainActivity).updateToolbarTitleDetail(donation.title)
 
@@ -56,14 +54,38 @@ class DonationDetailFragment : Fragment() {
 
                     binding.donationDescriptionDetailTV.text = donation.description
 
+                    // set like status
+                    if (viewmodel.isLiked(donation.id)) {
+                        // item is liked
+                        binding.favoriteBTN.setImageResource(R.drawable.favorite_icon)
+                    } else {
+                        // item isn't liked
+                        binding.favoriteBTN.setImageResource(R.drawable.favorite_blank_icon)
+                    }
 
-                    // TODO implement like function
-//                    binding.favoriteBTN.setOnClickListener()
+                    // set clicklistener on like button
+                    binding.favoriteBTN.setOnClickListener {
+                        // change status
+                        donation.isLiked = !donation.isLiked
 
+                        // update symbol based on new status
+                        if (donation.isLiked) {
+                            binding.favoriteBTN.setImageResource(R.drawable.favorite_icon)
+                            viewmodel.addToLikedDonations(donation)
+                        } else {
+                            binding.favoriteBTN.setImageResource(R.drawable.favorite_blank_icon)
+                            viewmodel.removeFromLikedDonations(donation)
+                        }
+                    }
 
                     binding.donateNowFAB.setOnClickListener() {
                         val navController = findNavController()
-                        navController.navigate(DonationDetailFragmentDirections.actionDonationDetailFragmentToPaymentFragment(donation.title, donation.creator))
+                        navController.navigate(
+                            DonationDetailFragmentDirections.actionDonationDetailFragmentToPaymentFragment(
+                                donation.title,
+                                donation.creator
+                            )
+                        )
                     }
                 }
             })

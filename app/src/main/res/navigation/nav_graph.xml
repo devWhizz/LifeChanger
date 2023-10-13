@@ -38,10 +38,7 @@
             android:id="@+id/action_donationDetailFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
         <argument
-            android:name="donationIndex"
-            app:argType="integer" />
-        <argument
-            android:name="category"
+            android:name="donationId"
             app:argType="string" />
     </fragment>
     <fragment

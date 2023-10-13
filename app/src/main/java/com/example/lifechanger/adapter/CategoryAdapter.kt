@@ -30,11 +30,11 @@ class CategoryAdapter(
         // create val to work with expression
         val item = dataset[position]
 
-        //  settings to implement objects in ViewHolder
+        // settings to implement objects in ViewHolder
         holder.binding.detailTitleTV.text = item.title
         holder.binding.detailCompanyTV.text = item.creator
 
-        //use Coil to load images
+        // use Coil to load images
         holder.binding.detailImageIV.load(item.image.toUri().buildUpon().scheme("https").build())
 
         // set like status
@@ -51,17 +51,12 @@ class CategoryAdapter(
             // change status
             item.isLiked = !item.isLiked
 
-            // update symbol based in new status
+            // update symbol based on new status
             if (item.isLiked) {
                 holder.binding.likeBTN.setImageResource(R.drawable.favorite_icon)
-            } else {
-                holder.binding.likeBTN.setImageResource(R.drawable.favorite_blank_icon)
-            }
-
-            // add or remove liked items
-            if (item.isLiked) {
                 viewmodel.addToLikedDonations(item)
             } else {
+                holder.binding.likeBTN.setImageResource(R.drawable.favorite_blank_icon)
                 viewmodel.removeFromLikedDonations(item)
             }
         }
@@ -71,6 +66,14 @@ class CategoryAdapter(
     fun updateData(newData: List<Donation>) {
         dataset = newData
         notifyDataSetChanged()
+    }
+
+    // get ID of donation based on its position in recyclerview
+    fun getDonationIdAtPosition(position: Int): String {
+        if (position in dataset.indices) {
+            return dataset[position].id
+        }
+        return ""
     }
 
     //  return size of elements in dataset (list elements)

@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.R
 import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.adapter.CategoryAdapter
+import com.example.lifechanger.addOnItemClickListener
 import com.example.lifechanger.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
@@ -46,14 +48,22 @@ class FavoritesFragment : Fragment() {
 
         // observe livedata of liked donations updates
         viewmodel.likedDonationsUpdated.observe(viewLifecycleOwner) {
-            // Get the updated liked donations and update the RecyclerView
+            // get updated liked donations and update RecyclerView
             val likedDonationIds = viewmodel.getLikedDonationIds()
             val likedDonations = viewmodel.getDonationsByIds(likedDonationIds)
             categoryAdapter.updateData(likedDonations)
         }
 
-        // TODO implement ClickListener for RV items
-//        binding.favoritesRV.addOnItemClickListener {}
-
+        binding.favoritesRV.addOnItemClickListener {
+            // get donation ID
+            val donationId =
+                (binding.favoritesRV.adapter as CategoryAdapter).getDonationIdAtPosition(it)
+            val navController = findNavController()
+            // navigate to fragment passing relevant information
+            val action = FavoritesFragmentDirections.actionFavoritesFragmentToDonationDetailFragment(
+                donationId = donationId
+            )
+            navController.navigate(action)
+        }
     }
 }

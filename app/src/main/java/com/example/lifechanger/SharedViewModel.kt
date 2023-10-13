@@ -22,14 +22,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     private val quoteDatabase = getQuoteDatabase(application)
 
-    private val repository = CategoryRepository()
-    private val firestore = FirebaseFirestore.getInstance()
-
     // create instance to access data from API
     private val repositoryQuotesApi = QuotesRepository(Api, quoteDatabase)
 
-    // create instances to access data from repository
-//    val donation = repositoryQuotesApi.getAllQuotesFromDatabase()
+    private val repository = CategoryRepository()
+    private val firestore = FirebaseFirestore.getInstance()
 
     private val sharedPreferences: SharedPreferences =
         application.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
@@ -37,6 +34,24 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     init {
         loadDonationsFromFirestore()
         loadQuotes()
+    }
+
+    // starting Coroutines to run processes while viewmodel is active
+    // load data from API in repository
+    private fun loadQuotes() {
+        viewModelScope.launch {
+            try {
+                Log.d("SharedViewModel", "Loading Quote Data from API.")
+                repositoryQuotesApi.loadQuotes()
+                Log.d("SharedViewModel", "Quote Data loaded successfully.")
+            } catch (e: Exception) {
+                Log.e("SharedViewModel", "Error while loading $e")
+            }
+        }
+    }
+
+    fun getRandomQuote(): LiveData<Quotes> {
+        return repositoryQuotesApi.getRandomEntry()
     }
 
     private val _donations = MutableLiveData<List<Donation>>()
@@ -90,19 +105,18 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     // liked donations
     private val likedDonations = MutableLiveData<List<Donation>>()
-//    private val likedDonations: LiveData<List<Donation>> = _likedDonations
 
     // liveData to notify FavoritesFragment about changes in liked donations
     private val _likedDonationsUpdated = MutableLiveData<Unit>()
     val likedDonationsUpdated: LiveData<Unit> get() = _likedDonationsUpdated
 
-    // add liked donations to Recyclerview (FavoritesFragment)
+    // add liked donations to recyclerview (FavoritesFragment)
     fun addToLikedDonations(donation: Donation) {
         sharedPreferences.edit()
             .putBoolean(donation.id, true)
             .apply()
 
-        Log.d("SharedViewModel", "Donation with ID ${donation.id} was added to liked donations.")
+        Log.d("SharedViewModel", "Donation with ID ${donation.id} was added to SharedPreferences.")
 
         val currentLikedDonations = likedDonations.value ?: emptyList()
         val updatedLikedDonations = currentLikedDonations.toMutableList()
@@ -110,13 +124,16 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         likedDonations.value = updatedLikedDonations
     }
 
-    // remove liked donations to Recyclerview (FavoritesFragment)
+    // remove liked donations from recyclerview (FavoritesFragment)
     fun removeFromLikedDonations(donation: Donation) {
         sharedPreferences.edit()
             .putBoolean(donation.id, false)
             .apply()
 
-        Log.d("SharedViewModel", "Donation with ID ${donation.id} was removed from liked donations.")
+        Log.d(
+            "SharedViewModel",
+            "Donation with ID ${donation.id} was removed from SharedPreferences."
+        )
 
         val currentLikedDonations = likedDonations.value ?: emptyList()
         val updatedLikedDonations = currentLikedDonations.toMutableList()
@@ -143,46 +160,27 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             .filter { it.id in ids }
     }
 
-    // retrieve donations based on a specific category from the repository
-    fun getDonationByCategory(category: String): LiveData<List<Donation>> {
-        val liveData = MutableLiveData<List<Donation>>()
+    // retrieve donation from the repository based on its ID
+    fun getDonationById(donationId: String): MutableLiveData<Donation?> {
+        val liveData = MutableLiveData<Donation?>()
 
-        // retrieve data from Firebase and insert it into MutableLiveData object.
+        // retrieve data from Firebase and insert it into MutableLiveData object
         firestore.collection("donations")
-            .whereEqualTo("category", category)
+            .whereEqualTo("id", donationId)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
-                    Log.e("Viewmodel", "Error getting donations by category", exception)
+                    Log.e("Viewmodel", "Error getting donations by id", exception)
                 } else {
-                    val donations = mutableListOf<Donation>()
+                    var donation: Donation? = null
                     if (snapshot != null) {
                         for (document in snapshot) {
-                            val donation = document.toObject(Donation::class.java)
-                            donations.add(donation)
+                            donation = document.toObject(Donation::class.java)
+                            break
                         }
                     }
-                    liveData.postValue(donations)
+                    liveData.postValue(donation)
                 }
             }
-
         return liveData
-    }
-
-    // starting Coroutines to run processes while viewmodel is active
-    // load data from API in repository
-    private fun loadQuotes() {
-        viewModelScope.launch {
-            try {
-                Log.d("SharedViewModel", "Loading Quote Data from API.")
-                repositoryQuotesApi.loadQuotes()
-                Log.d("SharedViewModel", "Quote Data loaded successfully.")
-            } catch (e: Exception) {
-                Log.e("SharedViewModel", "Error while loading $e")
-            }
-        }
-    }
-
-    fun getRandomQuote(): LiveData<Quotes> {
-        return repositoryQuotesApi.getRandomEntry()
     }
 }

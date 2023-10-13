@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.adapter.CategoryAdapter
+import com.example.lifechanger.addOnItemClickListener
 import com.example.lifechanger.databinding.FragmentCategoryBinding
 
 class CategoryFragment : Fragment() {
@@ -38,7 +39,7 @@ class CategoryFragment : Fragment() {
         // get toolbar title
         (activity as MainActivity).updateToolbarTitleDetail(selectedCategory.toString())
 
-        // use selected category parameter to display correct category in RecyclerView
+        // use selected category parameter to display correct category in recyclerview
         val categoryAdapter = CategoryAdapter(emptyList(), viewmodel)
         binding.categoryRV.adapter = categoryAdapter
 
@@ -49,12 +50,14 @@ class CategoryFragment : Fragment() {
             categoryAdapter.notifyDataSetChanged()
         }
 
-        binding.categoryRV.addOnItemClickListener { position ->
-            val selectedCategory = arguments?.getString("selectedCategory")
+        binding.categoryRV.addOnItemClickListener {
+            // get donation ID
+            val donationId =
+                (binding.categoryRV.adapter as CategoryAdapter).getDonationIdAtPosition(it)
             val navController = findNavController()
+            // navigate to DonationDetailFragment passing relevant information
             val action = CategoryFragmentDirections.actionCategoryFragmentToDonationDetailFragment(
-                donationIndex = position,
-                category = selectedCategory ?: ""
+                donationId = donationId
             )
             navController.navigate(action)
         }
@@ -64,21 +67,4 @@ class CategoryFragment : Fragment() {
             navController.navigate(CategoryFragmentDirections.actionCategoryFragmentToAddDonationFragment())
         }
     }
-}
-
-// function adding a clicklistener to a RecyclerView item
-fun RecyclerView.addOnItemClickListener(onItemClickListener: (Int) -> Unit) {
-    this.addOnChildAttachStateChangeListener(object :
-        RecyclerView.OnChildAttachStateChangeListener {
-        override fun onChildViewAttachedToWindow(view: View) {
-            view.setOnClickListener {
-                val holder = getChildViewHolder(view)
-                onItemClickListener(holder.adapterPosition)
-            }
-        }
-
-        override fun onChildViewDetachedFromWindow(view: View) {
-            view.setOnClickListener(null)
-        }
-    })
 }
