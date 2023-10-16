@@ -31,6 +31,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val sharedPreferences: SharedPreferences =
         application.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
 
+    // save user input - search query (SearchFragment)
+    var lastSearchQuery: String = ""
+
     init {
         loadDonationsFromFirestore()
         loadQuotes()
@@ -181,6 +184,49 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                     liveData.postValue(donation)
                 }
             }
+        return liveData
+    }
+
+    fun getPaypalEmailForDonation(donationId: String): MutableLiveData<String?> {
+        val liveData = MutableLiveData<String?>()
+
+        firestore.collection("donations")
+            .whereEqualTo("id", donationId)
+            .addSnapshotListener { snapshot, exception ->
+                if (exception != null) {
+                    Log.e("Viewmodel", "Error getting donations by id", exception)
+                    liveData.postValue(null)
+                } else {
+                    var paypalEmail: String? = null
+                    if (snapshot != null) {
+                        for (document in snapshot) {
+                            val donation = document.toObject(Donation::class.java)
+                            paypalEmail = donation.payment
+                            break
+                        }
+                    }
+                    liveData.postValue(paypalEmail)
+                }
+            }
+        return liveData
+    }
+
+    fun searchDonations(query: String): LiveData<List<Donation>> {
+        val liveData = MutableLiveData<List<Donation>>()
+        val results = mutableListOf<Donation>()
+
+        donations.value?.let { allDonations ->
+            for (donation in allDonations) {
+                if (donation.title.contains(query, true) || donation.creator.contains(
+                        query,
+                        true
+                    )
+                ) {
+                    results.add(donation)
+                }
+            }
+        }
+        liveData.postValue(results)
         return liveData
     }
 }

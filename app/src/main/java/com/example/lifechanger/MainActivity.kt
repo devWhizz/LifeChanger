@@ -50,6 +50,10 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.settingsFragment)
                 }
 
+                R.id.searchFragment -> {
+                    navController.navigate(R.id.searchFragment)
+                }
+
                 else -> {
                     navController.navigateUp()
                 }

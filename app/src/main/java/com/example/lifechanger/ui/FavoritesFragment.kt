@@ -60,9 +60,10 @@ class FavoritesFragment : Fragment() {
                 (binding.favoritesRV.adapter as CategoryAdapter).getDonationIdAtPosition(it)
             val navController = findNavController()
             // navigate to fragment passing relevant information
-            val action = FavoritesFragmentDirections.actionFavoritesFragmentToDonationDetailFragment(
-                donationId = donationId
-            )
+            val action =
+                FavoritesFragmentDirections.actionFavoritesFragmentToDonationDetailFragment(
+                    donationId = donationId
+                )
             navController.navigate(action)
         }
     }

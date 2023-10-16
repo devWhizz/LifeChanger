@@ -107,6 +107,9 @@
         <argument
             android:name="donationCreator"
             app:argType="string" />
+        <argument
+            android:name="donationId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -119,5 +122,14 @@
         <action
             android:id="@+id/action_settingsFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.lifechanger.ui.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_donationDetailFragment"
+            app:destination="@id/donationDetailFragment" />
     </fragment>
 </navigation>

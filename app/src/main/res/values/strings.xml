@@ -29,6 +29,7 @@
     <string name="favorites">Favoriten</string>
     <string name="payment">Bezahlung</string>
     <string name="settings">Einstellungen</string>
+    <string name="search">Suche</string>
 
     <string name="shareText">Schau dir diese Spendenaktion an:</string>
     <string name="addDonation">Spendenaktion erstellen</string>
@@ -39,6 +40,7 @@
     <string name="addCreator">Initiator/-in</string>
     <string name="uploadImage">Bild auswählen</string>
     <string name="addAccountInfo">PayPal-Adresse</string>
+    <string name="searchHint">Suchbegriff eingeben</string>
 
     <string name="donateTo">Du spendest an:</string>
     <string name="addAmount">Spendensumme</string>
@@ -62,5 +64,7 @@
         <item>Bildung</item>
         <item>Infrastruktur</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

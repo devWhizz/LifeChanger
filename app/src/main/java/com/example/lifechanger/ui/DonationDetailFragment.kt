@@ -83,7 +83,8 @@ class DonationDetailFragment : Fragment() {
                         navController.navigate(
                             DonationDetailFragmentDirections.actionDonationDetailFragmentToPaymentFragment(
                                 donation.title,
-                                donation.creator
+                                donation.creator,
+                                donation.id
                             )
                         )
                     }

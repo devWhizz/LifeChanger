@@ -102,7 +102,7 @@ class AddDonationFragment : Fragment() {
                 binding.addDonationDescriptionTI.text!!.isNotBlank() &&
                 binding.addDonationCreatorTI.text!!.isNotBlank() &&
                 selectedImageUri != null &&
-                binding.addAccountInfo.text!!.isNotBlank()
+                binding.addAmountTI.text!!.isNotBlank()
             ) {
                 // show ProgressBar to indicate upload progress
                 binding.uploadProgressBar.visibility = View.VISIBLE
@@ -125,7 +125,7 @@ class AddDonationFragment : Fragment() {
                             description = binding.addDonationDescriptionTI.text.toString(),
                             creator = binding.addDonationCreatorTI.text.toString(),
                             image = imageString,
-                            payment = binding.addAccountInfo.text.toString()
+                            payment = binding.addAmountTI.text.toString()
                         )
 
                         // add donation to Firestore

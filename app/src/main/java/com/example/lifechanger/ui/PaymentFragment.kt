@@ -7,14 +7,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.R
+import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.databinding.FragmentPaymentBinding
 
 class PaymentFragment : Fragment() {
 
     private lateinit var binding: FragmentPaymentBinding
+    private val viewmodel: SharedViewModel by activityViewModels()
+    private val args: PaymentFragmentArgs by navArgs()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,8 +35,9 @@ class PaymentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val donationTitle = arguments?.getString("donationTitle")
-        val donationCreator = arguments?.getString("donationCreator")
+        val donationTitle = args.donationTitle
+        val donationCreator = args.donationCreator
+        val donationId = args.donationId
 
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.payment)
@@ -38,13 +46,18 @@ class PaymentFragment : Fragment() {
         binding.titlePayment.text = donationTitle
 
         binding.paypalBTN.setOnClickListener {
+            // observe liveData object to get PayPal email address
+            viewmodel.getPaypalEmailForDonation(donationId)
+                .observe(viewLifecycleOwner) { paypalEmail ->
+                    val amount = binding.addAmountTI.text.toString()
+                    // val description = "donationTitle"
+                    val currency = "EUR"
+                    val paypalWebUrl =
+                        "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=$paypalEmail&amount=$amount&currency_code=$currency"
 
-            // TODO implement handover of Creator's Paypal address from Firebase
-            // val paypalWebUrl = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=$recipient&amount=$amount&currency_code=$currency"
-
-            val paypalWebUrl = "https://www.paypal.com/"
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(paypalWebUrl))
-            startActivity(browserIntent)
+                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(paypalWebUrl))
+                    startActivity(browserIntent)
+                }
         }
 
         // set OnClickListener do navigate back (when canceled)
