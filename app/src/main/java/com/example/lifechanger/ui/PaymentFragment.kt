@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -50,7 +49,6 @@ class PaymentFragment : Fragment() {
             viewmodel.getPaypalEmailForDonation(donationId)
                 .observe(viewLifecycleOwner) { paypalEmail ->
                     val amount = binding.addAmountTI.text.toString()
-                    // val description = "donationTitle"
                     val currency = "EUR"
                     val paypalWebUrl =
                         "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=$paypalEmail&amount=$amount&currency_code=$currency"

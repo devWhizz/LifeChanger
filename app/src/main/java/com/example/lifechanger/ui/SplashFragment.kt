@@ -83,8 +83,8 @@ class SplashFragment : Fragment() {
     private fun navigateToHomeFragment() {
         val navController = findNavController()
         val options = NavOptions.Builder()
-            .setEnterAnim(R.anim.zoom_in)
-            .setPopExitAnim(R.anim.zoom_in)
+            .setEnterAnim(R.anim.slide_in_right)
+            .setExitAnim(R.anim.slide_out_left)
             .build()
         navController.navigate(
             SplashFragmentDirections.actionSplashFragmentToHomeFragment(),

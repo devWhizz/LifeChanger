@@ -1,9 +1,12 @@
 package com.example.lifechanger
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.lifechanger.databinding.ActivityMainBinding
@@ -22,6 +25,16 @@ class MainActivity : AppCompatActivity() {
         // change color of status bar
         window.statusBarColor = this.getColor(R.color.main)
 
+        // restore dark-mode status from SharedPreferences
+        val sharedPrefs = getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
+        val isDarkModeEnabled = sharedPrefs.getBoolean("darkModeEnabled", false)
+
+        if (isDarkModeEnabled) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
         val navHostFragment: NavHostFragment =
             supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
@@ -35,6 +48,11 @@ class MainActivity : AppCompatActivity() {
 
         // set up BottomNavigationView with NavController
         binding.bottomNav.setupWithNavController(navController)
+
+        val options = NavOptions.Builder()
+            .setEnterAnim(R.anim.slide_up)
+            .setExitAnim(R.anim.fade_out)
+            .build()
 
         binding.bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -51,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.searchFragment -> {
-                    navController.navigate(R.id.searchFragment)
+                    navController.navigate(R.id.searchFragment, null, options)
                 }
 
                 else -> {
