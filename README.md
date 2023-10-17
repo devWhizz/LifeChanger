@@ -7,7 +7,8 @@ This app allows users to discover, support and donate to various causes and char
 - [Project Structure](#project-structure)
 - [Key Files](#key-files)
 - [Adding a Donation](#adding-a-donation)
-- [Like Function](#like-function)
+- [Like Feature](#like-feature)
+- [Search Feature](#search-feature)
 - [Payment](#payment)
 - [Contributing](#contributing)
 
@@ -44,6 +45,7 @@ Here are some of the key files of the project:
 4. **MainActivity.kt**: The main activity of the app. It hosts the navigation components and handles the toolbar and bottom navigation bar. The activity is responsible for navigating between different fragments and managing the app's overall user interface.
 5. **AddDonationFragment.kt**: This fragment is used for adding new donations to the app. Users can input details such as the donation title, description, category and image. After inputting the required information, users can submit the donation details to add it to the app's database.
 6. **FavoritesFragment.kt**: This fragment displays a list of liked donations. Users can like or dislike donations and the fragment updates the list of liked donations based on user interactions. It also provides a click action to navigate to the DonationDetailFragment for further information about a liked donation.
+6. **SearchFragment.kt**: This fragment allows the user to browse all stored donations by typing keywords into the search field.
 7. **DonationDetailFragment.kt**: This fragment displays detailed information about a specific donation. It is used to view donation details such as the title, creator, image and description. Users can also like the donation from this fragment or proceed to the PaymentFragment to make a donation.
 8. **PaymentFragment.kt**: This fragment guides users through the payment process for making a donation. Users can choose the donation amount and complete the donation transaction. The PaymentFragment is responsible for handling the donation process and confirming the payment.
 
@@ -57,13 +59,24 @@ Users can add a new donation to the app by following these steps:
 3. Submit the donation details to add it to the app's database (Google Firestore).
 
 
-### Like Function
+### Like Feature
 
-The "Like" function allows users to express their support for specific donations. Here's how it works:
+The like feature allows users to express their support for specific donations. Here's how it works:
 
 1. Browse through the list of donations.
 2. When you find a donation that you'd like to support, click the heart-shaped "Like" button associated with that donation.
 3. The donation will be added to your list of liked donations for easy access and reference.
+4. You can always get to them by navigating to the FavoritesFragment from the bottom navigation bar (heart icon)
+
+
+### Search Feature
+
+The app includes a search feature that allows users to find specific donations by using keywords. Here's how you can use the search function:
+
+1. Open the Search Fragment by navigating to it from the bottom navigation bar (magnifier icon).
+2. Enter a search query into the input field. Enter keywords related to the donations you're looking for.
+3. As you type in your search query, the app dynamically filters the donations based on your input. The recyclerview displays the search results in real-time, updating as you type.
+4. You can click on a donation from the search results to view more details about it.
 
 
 ### Payment
