@@ -15,6 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LifeChanger"
         tools:targetApi="31">
+
+        <activity
+            android:name=".ui.AboutBottomSheetFragment"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -27,6 +33,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>

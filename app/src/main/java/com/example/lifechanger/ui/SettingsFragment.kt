@@ -31,6 +31,7 @@ class SettingsFragment : Fragment() {
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.settings)
 
+        // setup dark mode toggle
         val darkModeSwitch = binding.darkModeSwitch
         darkModeSwitch.isChecked = isDarkModeEnabled()
 
@@ -43,17 +44,25 @@ class SettingsFragment : Fragment() {
             }
             saveDarkModeStatus(isChecked)
         }
+
+        // setup bottom sheet
+        val openBottomSheetButton = binding.aboutTV
+        openBottomSheetButton.setOnClickListener {
+            val bottomSheetFragment = AboutBottomSheetFragment()
+            bottomSheetFragment.show(childFragmentManager, bottomSheetFragment.tag)
+        }
     }
 
     private fun isDarkModeEnabled(): Boolean {
         val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }
+
     private fun saveDarkModeStatus(isDarkModeEnabled: Boolean) {
-        val sharedPrefs = requireContext().getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
+        val sharedPrefs =
+            requireContext().getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
         val editor = sharedPrefs.edit()
         editor.putBoolean("darkModeEnabled", isDarkModeEnabled)
         editor.apply()
     }
-
 }

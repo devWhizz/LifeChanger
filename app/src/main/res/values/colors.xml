@@ -3,6 +3,10 @@
     <color name="dark">#000000</color>
     <color name="light">#FFFFFF</color>
 
+    <color name="alwaysBlack">#000000</color>
+    <color name="alwaysWhite">#FFFFFF</color>
+
+
     <color name="main">#739E8C</color>
     <color name="second">#FF9C51</color>
     <color name="third">#D0DFD9</color>

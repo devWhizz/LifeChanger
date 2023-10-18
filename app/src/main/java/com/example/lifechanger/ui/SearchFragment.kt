@@ -58,8 +58,14 @@ class SearchFragment : Fragment() {
                 if (query.isEmpty()) {
                     categoryAdapter.dataset = emptyList()
                     categoryAdapter.notifyDataSetChanged()
+                    binding.noResultsTV.visibility = View.GONE
                 } else {
                     viewmodel.searchDonations(query).observe(viewLifecycleOwner) { searchResults ->
+                        if (searchResults.isEmpty()) {
+                            binding.noResultsTV.visibility = View.VISIBLE
+                        } else {
+                            binding.noResultsTV.visibility = View.GONE
+                        }
                         categoryAdapter.dataset = searchResults
                         categoryAdapter.notifyDataSetChanged()
                     }
