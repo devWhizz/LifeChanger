@@ -17,7 +17,7 @@ class QuotesRepository(val quotesApi: Api, private val database: QuotesDatabase)
     // asynchronous loading fun to update livedata and saving/writing possibly changed data
     suspend fun loadQuotes() {
         try {
-            val quotes = quotesApi.retrofitService.getQuotes()
+            val quotes = quotesApi.quotesApiService.getQuotes()
             _quotes.value = quotes
             insertQuotesIntoDatabase(quotes)
         } catch (e: Exception) {

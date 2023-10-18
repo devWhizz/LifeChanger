@@ -1,8 +1,10 @@
 package com.example.lifechanger.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.net.toUri
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.example.lifechanger.R
@@ -14,6 +16,7 @@ class CategoryAdapter(
 
     var dataset: List<Donation>,
     val viewmodel: SharedViewModel,
+    private val targetLang: String = "en"
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     inner class CategoryViewHolder(val binding: DonationdetailItemBinding) :
@@ -30,7 +33,13 @@ class CategoryAdapter(
         // create val to work with expression
         val item = dataset[position]
 
-        // settings to implement objects in ViewHolder
+        // settings to translate content with deepL API
+//        viewmodel.translateDonationTitle(item, targetLang).observe((holder.itemView.context as LifecycleOwner)) { translatedTitle ->
+//            holder.binding.detailTitleTV.text = translatedTitle
+//            Log.d("TranslateText", "Translated title for item: ${item.title} to: $translatedTitle")
+//        }
+
+        // settings to implement objects into ViewHolder
         holder.binding.detailTitleTV.text = item.title
         holder.binding.detailCompanyTV.text = item.creator
 

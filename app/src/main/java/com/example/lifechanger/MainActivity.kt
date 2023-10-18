@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.lifechanger.databinding.ActivityMainBinding
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,13 +27,23 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = this.getColor(R.color.main)
 
         // restore dark-mode status from SharedPreferences
-        val sharedPrefs = getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)
-        val isDarkModeEnabled = sharedPrefs.getBoolean("darkModeEnabled", false)
+        val sharedPrefsAppSettings = getSharedPreferences("SharedPreferencesDarkMode", Context.MODE_PRIVATE)
+        val isDarkModeEnabled = sharedPrefsAppSettings.getBoolean("darkModeEnabled", false)
 
         if (isDarkModeEnabled) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
+        // restore language setting from SharedPreferences
+        val sharedPrefsLanguage = getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
+        val isGermanLanguageSelected = sharedPrefsLanguage.getBoolean("isGermanLanguageSelected", false)
+
+        if (isGermanLanguageSelected) {
+            setAppLanguage("de")
+        } else {
+            setAppLanguage("en")
         }
 
         val navHostFragment: NavHostFragment =
@@ -101,5 +112,14 @@ class MainActivity : AppCompatActivity() {
 
     fun updateToolbarTitleDetail(string: String) {
         binding.toolbarTV.text = string
+    }
+
+    private fun setAppLanguage(languageCode: String) {
+        val resources = resources
+        val configuration = resources.configuration
+        val displayMetrics = resources.displayMetrics
+        val locale = Locale(languageCode)
+        configuration.setLocale(locale)
+        resources.updateConfiguration(configuration, displayMetrics)
     }
 }

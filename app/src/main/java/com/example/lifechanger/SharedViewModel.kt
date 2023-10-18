@@ -9,14 +9,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.lifechanger.api.Api
+import com.example.lifechanger.api.DeepLApiService
+import com.example.lifechanger.api.retrofitDeepL
 import com.example.lifechanger.data.CategoryRepository
 import com.example.lifechanger.data.QuotesRepository
+import com.example.lifechanger.data.TranslationResponse
 import com.example.lifechanger.db.getQuoteDatabase
 import com.example.lifechanger.data.model.Category
 import com.example.lifechanger.data.model.Donation
 import com.example.lifechanger.data.model.Quotes
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -228,5 +234,45 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
         liveData.postValue(results)
         return liveData
+    }
+
+
+    private fun translateText(text: String, targetLang: String): LiveData<String> {
+        Log.d("TranslateText", "Translating text: $text to target language: $targetLang")
+        val result = MutableLiveData<String>()
+
+        val deepLApiKey = ApiConfig.deepLApiKey
+        val deepLApiService: DeepLApiService by lazy { retrofitDeepL.create(DeepLApiService::class.java) }
+
+        val call = deepLApiService.translateText(deepLApiKey, text, targetLang)
+
+        call.enqueue(object : Callback<TranslationResponse> {
+            override fun onResponse(
+                call: Call<TranslationResponse>,
+                response: Response<TranslationResponse>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+                    result.postValue(response.body()!!.translations.first().text)
+                    Log.d(
+                        "TranslateText",
+                        "Translation successful: ${response.body()!!.translations.first().text}"
+                    )
+                }
+            }
+
+            override fun onFailure(call: Call<TranslationResponse>, t: Throwable) {
+                result.postValue(text)
+                Log.e("TranslateText", "Translation failed: $t")
+            }
+        })
+        return result
+    }
+
+    fun translateDonationTitle(donation: Donation, targetLang: String): LiveData<String> {
+        val result = MutableLiveData<String>()
+        translateText(donation.title, targetLang).observeForever { translatedTitle ->
+            result.value = translatedTitle
+        }
+        return result
     }
 }

@@ -20,3 +20,7 @@ fun RecyclerView.addOnItemClickListener(onItemClickListener: (Int) -> Unit) {
         }
     })
 }
+
+object ApiConfig {
+    const val deepLApiKey = "7457d757-1f1b-b40b-3745-4c4de4cea4a8:fx"
+}
