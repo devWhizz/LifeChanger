@@ -1,5 +1,6 @@
 package com.example.lifechanger.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -26,6 +27,7 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -33,10 +35,10 @@ class SettingsFragment : Fragment() {
         (activity as MainActivity).updateToolbarTitle(R.string.settings)
 
         // setup dark mode toggle
-        val darkModeSwitch : Switch = binding.darkModeSwitch
+        val darkModeSwitch: Switch = binding.darkModeSwitch
         darkModeSwitch.isChecked = isDarkModeEnabled()
 
-        // set clicklistener for switch toggle
+        // set clicklistener for dark mode switch
         darkModeSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -46,11 +48,11 @@ class SettingsFragment : Fragment() {
             saveDarkModeStatus(isChecked)
         }
 
-        // setup language switch
-        var languageSwitch : Switch = binding.languageSwitch
+        // setup language toggle
+        val languageSwitch: Switch = binding.languageSwitch
         languageSwitch.isChecked = isGermanLanguageSelected()
 
-        // set clicklistener for language switch toggle
+        // set clicklistener for language switch
         languageSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 setAppLanguage("de")
@@ -58,7 +60,7 @@ class SettingsFragment : Fragment() {
                 setAppLanguage("en")
             }
             saveLanguageStatus(isChecked)
-            // Restart the activity to apply the language changes
+            // restart activity to apply language changes
             requireActivity().recreate()
         }
 
@@ -76,7 +78,8 @@ class SettingsFragment : Fragment() {
     }
 
     private fun saveDarkModeStatus(isDarkModeEnabled: Boolean) {
-        val sharedPrefs = requireContext().getSharedPreferences("SharedPreferencesDarkMode", Context.MODE_PRIVATE)
+        val sharedPrefs =
+            requireContext().getSharedPreferences("SharedPreferencesDarkMode", Context.MODE_PRIVATE)
         val editor = sharedPrefs.edit()
         editor.putBoolean("darkModeEnabled", isDarkModeEnabled)
         editor.apply()
@@ -88,19 +91,22 @@ class SettingsFragment : Fragment() {
     }
 
     private fun getAppLanguage(): String {
-        val sharedPrefs = requireContext().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
-        return sharedPrefs.getString("language", "en") ?: "en"
+        val sharedPrefs =
+            requireContext().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
+        return sharedPrefs.getString("targetLanguage", "de") ?: "de"
     }
 
     private fun setAppLanguage(languageCode: String) {
-        val sharedPrefs = requireContext().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
+        val sharedPrefs =
+            requireContext().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
         val editor = sharedPrefs.edit()
-        editor.putString("language", languageCode)
+        editor.putString("targetLanguage", languageCode)
         editor.apply()
     }
 
     private fun saveLanguageStatus(isGermanLanguageSelected: Boolean) {
-        val sharedPrefs = requireContext().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
+        val sharedPrefs =
+            requireContext().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
         val editor = sharedPrefs.edit()
         editor.putBoolean("isGermanLanguageSelected", isGermanLanguageSelected)
         editor.apply()

@@ -1,13 +1,13 @@
 package com.example.lifechanger.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.adapter.CategoryAdapter
@@ -36,8 +36,22 @@ class CategoryFragment : Fragment() {
         // get selected category parameter
         val selectedCategory = arguments?.getString("selectedCategory")
 
-        // get toolbar title
-        (activity as MainActivity).updateToolbarTitleDetail(selectedCategory.toString())
+        // get language status
+        val targetLang = viewmodel.getTargetLanguage()
+        Log.d("Translation", "Target language is: $targetLang")
+
+        // set toolbar title
+        if (selectedCategory != null) {
+            if (targetLang == "en") {
+                // settings to translate category title with deepL API
+                viewmodel.translateText(selectedCategory, targetLang)
+                    .observe(viewLifecycleOwner) { translatedCategory ->
+                        (activity as MainActivity).updateToolbarTitleDetail(translatedCategory)
+                    }
+            } else {
+                (activity as MainActivity).updateToolbarTitleDetail(selectedCategory)
+            }
+        }
 
         // use selected category parameter to display correct category in recyclerview
         val categoryAdapter = CategoryAdapter(emptyList(), viewmodel)

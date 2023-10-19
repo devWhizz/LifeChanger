@@ -3,6 +3,7 @@ package com.example.lifechanger.ui
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,14 +36,30 @@ class SplashFragment : Fragment() {
 
         animateLogo()
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            viewmodel.getRandomQuote().observe(viewLifecycleOwner, Observer { randomQuote ->
-                if (randomQuote != null) {
-                    // fill textview with random, animated quote
-                    animateText(binding.quoteTV, randomQuote.quote)
-                }
-            })
-        }, 2000)
+        // get language status
+        val targetLang = viewmodel.getTargetLanguage()
+        Log.d("Translation", "Target language is: $targetLang")
+
+        if (targetLang == "de") {
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewmodel.getRandomQuote().observe(viewLifecycleOwner, Observer { randomQuote ->
+                    if (randomQuote != null) {
+                        // fill textview with random, animated quote
+                        animateText(binding.quoteTV, randomQuote.quote)
+                    }
+                })
+            }, 2000)
+
+        } else {
+            Handler(Looper.getMainLooper()).postDelayed({
+                viewmodel.getRandomQuote().observe(viewLifecycleOwner, Observer { randomQuote ->
+                    if (randomQuote != null) {
+                        // fill textview with random, animated, translated quote
+                        animateText(binding.quoteTV, randomQuote.quoteTranslated)
+                    }
+                })
+            }, 2000)
+        }
     }
 
     private fun animateLogo() {

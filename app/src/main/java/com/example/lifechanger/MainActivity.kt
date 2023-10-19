@@ -26,9 +26,10 @@ class MainActivity : AppCompatActivity() {
         // change color of status bar
         window.statusBarColor = this.getColor(R.color.main)
 
-        // restore dark-mode status from SharedPreferences
-        val sharedPrefsAppSettings = getSharedPreferences("SharedPreferencesDarkMode", Context.MODE_PRIVATE)
-        val isDarkModeEnabled = sharedPrefsAppSettings.getBoolean("darkModeEnabled", false)
+        // restore and set dark mode status from SharedPreferences
+        val sharedPrefsDarkMode =
+            getSharedPreferences("SharedPreferencesDarkMode", Context.MODE_PRIVATE)
+        val isDarkModeEnabled = sharedPrefsDarkMode.getBoolean("darkModeEnabled", false)
 
         if (isDarkModeEnabled) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -36,14 +37,12 @@ class MainActivity : AppCompatActivity() {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
 
-        // restore language setting from SharedPreferences
-        val sharedPrefsLanguage = getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
-        val isGermanLanguageSelected = sharedPrefsLanguage.getBoolean("isGermanLanguageSelected", false)
-
-        if (isGermanLanguageSelected) {
+        // set App language
+        if (isFirstRun()) {
             setAppLanguage("de")
         } else {
-            setAppLanguage("en")
+            // restore language setting from SharedPreferences
+            restoreAppLanguage()
         }
 
         val navHostFragment: NavHostFragment =
@@ -104,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // function to update Toolbar titles
+    // function to update toolbar titles
     fun updateToolbarTitle(stringResId: Int) {
         val newTitle = getString(stringResId)
         binding.toolbarTV.text = newTitle
@@ -112,6 +111,25 @@ class MainActivity : AppCompatActivity() {
 
     fun updateToolbarTitleDetail(string: String) {
         binding.toolbarTV.text = string
+    }
+
+    private fun isFirstRun(): Boolean {
+        val sharedPrefsLanguage =
+            getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
+        return !sharedPrefsLanguage.contains("isGermanLanguageSelected")
+    }
+
+    private fun restoreAppLanguage() {
+        val sharedPrefsLanguage =
+            getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
+        val isGermanLanguageSelected =
+            sharedPrefsLanguage.getBoolean("isGermanLanguageSelected", false)
+
+        if (isGermanLanguageSelected) {
+            setAppLanguage("de")
+        } else {
+            setAppLanguage("en")
+        }
     }
 
     private fun setAppLanguage(languageCode: String) {

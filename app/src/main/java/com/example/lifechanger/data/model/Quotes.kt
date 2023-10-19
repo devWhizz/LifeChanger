@@ -15,4 +15,7 @@ data class Quotes(
     @Json(name = "Quote")
     val quote: String,
 
-    )
+    @Json(name = "Translation")
+    val quoteTranslated: String
+
+)

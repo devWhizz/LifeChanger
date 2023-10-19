@@ -16,7 +16,6 @@ class CategoryAdapter(
 
     var dataset: List<Donation>,
     val viewmodel: SharedViewModel,
-    private val targetLang: String = "en"
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     inner class CategoryViewHolder(val binding: DonationdetailItemBinding) :
@@ -33,14 +32,26 @@ class CategoryAdapter(
         // create val to work with expression
         val item = dataset[position]
 
-        // settings to translate content with deepL API
-//        viewmodel.translateDonationTitle(item, targetLang).observe((holder.itemView.context as LifecycleOwner)) { translatedTitle ->
-//            holder.binding.detailTitleTV.text = translatedTitle
-//            Log.d("TranslateText", "Translated title for item: ${item.title} to: $translatedTitle")
-//        }
-
         // settings to implement objects into ViewHolder
-        holder.binding.detailTitleTV.text = item.title
+
+        // get language status
+        val targetLang = viewmodel.getTargetLanguage()
+        Log.d("Translation", "Target language is: $targetLang")
+
+        if (targetLang == "en") {
+            // settings to translate donation title with deepL API
+            viewmodel.translateDonationTitle(item, targetLang)
+                .observe((holder.itemView.context as LifecycleOwner)) { translatedTitle ->
+                    holder.binding.detailTitleTV.text = translatedTitle
+                    Log.d(
+                        "TranslateText",
+                        "Translated title for item: ${item.title} to: $translatedTitle"
+                    )
+                }
+        } else {
+            holder.binding.detailTitleTV.text = item.title
+        }
+
         holder.binding.detailCompanyTV.text = item.creator
 
         // use Coil to load images

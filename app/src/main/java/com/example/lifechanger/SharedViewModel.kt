@@ -237,7 +237,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
 
-    private fun translateText(text: String, targetLang: String): LiveData<String> {
+    fun translateText(text: String, targetLang: String): LiveData<String> {
         Log.d("TranslateText", "Translating text: $text to target language: $targetLang")
         val result = MutableLiveData<String>()
 
@@ -268,6 +268,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return result
     }
 
+    fun getTargetLanguage(): String {
+        val sharedPrefs = getApplication<Application>().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
+        return sharedPrefs.getString("targetLanguage", "de") ?: "de"
+    }
+
     fun translateDonationTitle(donation: Donation, targetLang: String): LiveData<String> {
         val result = MutableLiveData<String>()
         translateText(donation.title, targetLang).observeForever { translatedTitle ->
@@ -275,4 +280,5 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
         return result
     }
+
 }
