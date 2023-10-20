@@ -50,7 +50,17 @@ class DonationDetailFragment : Fragment() {
                     // use Coil to load images
                     binding.donationImageDetailIV.load(
                         donation.image.toUri().buildUpon().scheme("https").build()
-                    )
+                    ) {
+                        // show ProgressBar while image is loading
+                        binding.loadingProgressBar.visibility = View.VISIBLE
+
+                        listener(
+                            onSuccess = { _, _ ->
+                                // hide ProgressBar when image is loaded successfully
+                                binding.loadingProgressBar.visibility = View.INVISIBLE
+                            }
+                        )
+                    }
 
                     binding.donationDescriptionDetailTV.text = donation.description
 

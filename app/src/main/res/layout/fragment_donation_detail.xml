@@ -16,6 +16,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ProgressBar
+                android:id="@+id/loadingProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="@+id/donationImageDetailIV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/donationImageDetailIV"
                 android:layout_width="match_parent"
@@ -35,7 +45,7 @@
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/favorite_blank_icon"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/donationImageDetailIV"
                 app:tint="@color/second" />
 
             <TextView
@@ -88,6 +98,7 @@
         android:src="@drawable/payment_icon"
         app:backgroundTint="@color/second"
         app:maxImageSize="40dp"
-        app:tint="@color/icon" />
+        app:tint="@color/icon"
+        android:focusable="true" />
 
 </FrameLayout>
