@@ -23,6 +23,9 @@ class SplashFragment : Fragment() {
     private val viewmodel: SharedViewModel by activityViewModels()
     private lateinit var binding: FragmentSplashBinding
 
+    private val handler = Handler(Looper.getMainLooper())
+    private var isAnimationRunning = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -40,25 +43,21 @@ class SplashFragment : Fragment() {
         val targetLang = viewmodel.getTargetLanguage()
         Log.d("Translation", "Target language is: $targetLang")
 
+        // display quotes based on language status
         if (targetLang == "de") {
-            Handler(Looper.getMainLooper()).postDelayed({
-                viewmodel.getRandomQuote().observe(viewLifecycleOwner, Observer { randomQuote ->
-                    if (randomQuote != null) {
-                        // fill textview with random, animated quote
-                        animateText(binding.quoteTV, randomQuote.quote)
-                    }
-                })
-            }, 2000)
-
+            viewmodel.getRandomQuote().observe(viewLifecycleOwner, Observer { randomQuote ->
+                if (randomQuote != null) {
+                    // fill textview with random, animated quote
+                    animateText(binding.quoteTV, randomQuote.quote)
+                }
+            })
         } else {
-            Handler(Looper.getMainLooper()).postDelayed({
-                viewmodel.getRandomQuote().observe(viewLifecycleOwner, Observer { randomQuote ->
-                    if (randomQuote != null) {
-                        // fill textview with random, animated, translated quote
-                        animateText(binding.quoteTV, randomQuote.quoteTranslated)
-                    }
-                })
-            }, 2000)
+            viewmodel.getRandomQuote().observe(viewLifecycleOwner, Observer { randomQuote ->
+                if (randomQuote != null) {
+                    // fill textview with random, animated, translated quote
+                    animateText(binding.quoteTV, randomQuote.quoteTranslated)
+                }
+            })
         }
     }
 
@@ -78,7 +77,11 @@ class SplashFragment : Fragment() {
     }
 
     private fun animateText(textView: TextView, text: String) {
-        val handler = Handler(Looper.getMainLooper())
+        if (isAnimationRunning) {
+            return
+        }
+
+        isAnimationRunning = true
         var index = 0
 
         handler.postDelayed(object : Runnable {
@@ -89,6 +92,7 @@ class SplashFragment : Fragment() {
                     index++
                     handler.postDelayed(this, 100)
                 } else {
+                    isAnimationRunning = false
                     Handler(Looper.getMainLooper()).postDelayed({
                         navigateToHomeFragment()
                     }, 2000)
@@ -127,5 +131,4 @@ class SplashFragment : Fragment() {
             View.VISIBLE
         (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.VISIBLE
     }
-
 }

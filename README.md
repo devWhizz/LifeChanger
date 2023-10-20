@@ -48,6 +48,7 @@ Here are some of the key files of the project:
 6. **SearchFragment.kt**: This fragment allows the user to browse all stored donations by typing keywords into the search field.
 7. **DonationDetailFragment.kt**: This fragment displays detailed information about a specific donation. It is used to view donation details such as the title, creator, image and description. Users can also like the donation from this fragment or proceed to the PaymentFragment to make a donation.
 8. **PaymentFragment.kt**: This fragment guides users through the payment process for making a donation. Users can choose the donation amount and complete the donation transaction. The PaymentFragment is responsible for handling the donation process and confirming the payment.
+9. **SettingsFragment.kt**: This fragment provides users with app settings and preferences. It includes options to toggle Dark Mode, change the app language (English or German), and access the "About" section.
 
 
 ### Adding a Donation

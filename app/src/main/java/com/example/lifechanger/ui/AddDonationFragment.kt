@@ -6,20 +6,20 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.R
+import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.data.model.Donation
 import com.example.lifechanger.databinding.FragmentAddDonationBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,10 +29,16 @@ import java.util.UUID
 class AddDonationFragment : Fragment() {
 
     private lateinit var binding: FragmentAddDonationBinding
+
+    // assign viewmodel to SharedViewModel
+    private val viewmodel: SharedViewModel by activityViewModels()
+
     private lateinit var imagePicker: ActivityResultLauncher<Intent>
     private var selectedImageUri: Uri? = null
 
     private val firestore = FirebaseFirestore.getInstance()
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,11 +55,34 @@ class AddDonationFragment : Fragment() {
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.addDonation)
 
+        // get language status
+        val targetLang = viewmodel.getTargetLanguage()
+        Log.d("Translation", "Target language is: $targetLang")
+
         // declare variable to store selected Spinner title
         var selectedCategoryTitle = ""
 
         // initialize Spinner
-        val categorySpinner = view.findViewById<Spinner>(R.id.addDonationCategorySpinner)
+        val categorySpinner = binding.addDonationCategorySpinner
+
+        val categoryTitles = mapOf(
+            "Climate" to "Klima",
+            "Waters" to "Gewässer",
+            "Garbage" to "Müll",
+            "Disasters" to "Katastrophen",
+            "Animal Rights" to "Tierschutz",
+            "Species Protection" to "Artenschutz",
+            "Cats" to "Katzen",
+            "Dogs" to "Hunde",
+            "Horses" to "Pferde",
+            "Kids" to "Kinder",
+            "Seniors" to "Senioren",
+            "Homeless" to "Obdachlose",
+            "Refugees" to "Flüchtlinge",
+            "Inclusion" to "Inklusion",
+            "Education" to "Bildung",
+            "Infrastructure" to "Infrastruktur"
+        )
 
         // set ClickOnListener for Spinner
         categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -63,15 +92,19 @@ class AddDonationFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                selectedCategoryTitle = parentView?.getItemAtPosition(position).toString()
+                val selectedCategory = parentView?.getItemAtPosition(position).toString()
+
+                // use map to get corresponding title in German
+                val germanCategoryTitle = categoryTitles[selectedCategory] ?: selectedCategory
+                selectedCategoryTitle = germanCategoryTitle
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
         }
 
-        val selectImageBTN = view.findViewById<Button>(R.id.selectImageBTN)
-        val selectedImageIV = view.findViewById<ImageView>(R.id.selectedImageIV)
+        val selectImageBTN = binding.selectImageBTN
+        val selectedImageIV = binding.selectedImageIV
 
         // set ImageView to be initially invisible
         selectedImageIV.visibility = View.INVISIBLE
@@ -177,8 +210,8 @@ class AddDonationFragment : Fragment() {
 
     private fun showSuccessDialog() {
         val alertDialog = AlertDialog.Builder(requireContext())
-        alertDialog.setTitle("Gratulation")
-        alertDialog.setMessage("Deine Spendenaktion wurde erfolgreich erstellt!")
+        alertDialog.setTitle(R.string.successTitleAdding)
+        alertDialog.setMessage(getString(R.string.successMessageAdding))
         alertDialog.setPositiveButton("OK") { dialog, which ->
             dialog.dismiss()
         }
@@ -188,7 +221,7 @@ class AddDonationFragment : Fragment() {
     private fun showErrorToast() {
         Toast.makeText(
             requireContext(),
-            "Bitte fülle alle Felder aus!",
+            (getString(R.string.errorMessageAdding)),
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -205,5 +238,4 @@ class AddDonationFragment : Fragment() {
         // show bottom menu when AddDonationFragment is destroyed
         (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.VISIBLE
     }
-
 }

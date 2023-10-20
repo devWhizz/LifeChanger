@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -45,17 +46,25 @@ class PaymentFragment : Fragment() {
         binding.titlePayment.text = donationTitle
 
         binding.paypalBTN.setOnClickListener {
-            // observe liveData object to get PayPal email address
-            viewmodel.getPaypalEmailForDonation(donationId)
-                .observe(viewLifecycleOwner) { paypalEmail ->
-                    val amount = binding.addAmountTI.text.toString()
-                    val currency = "EUR"
-                    val paypalWebUrl =
-                        "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=$paypalEmail&amount=$amount&currency_code=$currency"
 
-                    val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(paypalWebUrl))
-                    startActivity(browserIntent)
-                }
+            val amount = binding.addAmountTI.text.toString()
+
+            if (amount.isNotBlank()) {
+                // observe liveData object to get PayPal email address
+                viewmodel.getPaypalEmailForDonation(donationId)
+                    .observe(viewLifecycleOwner) { paypalEmail ->
+                        val amount = binding.addAmountTI.text.toString()
+                        val currency = "EUR"
+                        val paypalWebUrl =
+                            "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=$paypalEmail&amount=$amount&currency_code=$currency"
+
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(paypalWebUrl))
+                        startActivity(browserIntent)
+                    }
+            } else {
+                // display error message if no amount was entered
+                showErrorToast()
+            }
         }
 
         // set OnClickListener do navigate back (when canceled)
@@ -63,4 +72,13 @@ class PaymentFragment : Fragment() {
             findNavController().navigateUp()
         }
     }
+
+    private fun showErrorToast() {
+        Toast.makeText(
+            requireContext(),
+            (getString(R.string.errorMessageAdding)),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+    
 }
