@@ -3,12 +3,14 @@ package com.example.lifechanger.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.lifechanger.MainActivity
@@ -35,44 +37,64 @@ class PaymentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val donationTitle = args.donationTitle
         val donationCreator = args.donationCreator
         val donationId = args.donationId
 
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.payment)
 
-        binding.creatorPayment.text = donationCreator
-        binding.titlePayment.text = donationTitle
+        viewmodel.getDonationById(donationId)
+            .observe(viewLifecycleOwner) { donation ->
+                if (donation != null) {
 
-        binding.paypalBTN.setOnClickListener {
+                    // get language status
+                    val targetLang = viewmodel.getTargetLanguage()
+                    Log.d("Translation", "Target language is: $targetLang")
 
-            val amount = binding.addAmountTI.text.toString()
-
-            if (amount.isNotBlank()) {
-                // observe liveData object to get PayPal email address
-                viewmodel.getPaypalEmailForDonation(donationId)
-                    .observe(viewLifecycleOwner) { paypalEmail ->
-                        val amount = binding.addAmountTI.text.toString()
-                        val currency = "EUR"
-                        val paypalWebUrl =
-                            "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=$paypalEmail&amount=$amount&currency_code=$currency"
-
-                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(paypalWebUrl))
-                        startActivity(browserIntent)
+                    if (targetLang == "en") {
+                        // settings to translate donation title with deepL API
+                        viewmodel.translateDonationTitle(donation, targetLang)
+                            .observe((view.context as LifecycleOwner)) { translatedTitle ->
+                                binding.titlePaymentTV.text = translatedTitle
+                            }
+                    } else {
+                        binding.titlePaymentTV.text = donation.title
                     }
-            } else {
-                // display error message if no amount was entered
-                showErrorToast()
+
+                    binding.creatorPaymentTV.text = donationCreator
+
+                    binding.paypalBTN.setOnClickListener {
+
+                        val amount = binding.addAmountTI.text.toString()
+
+                        if (amount.isNotBlank()) {
+                            // observe liveData object to get PayPal email address
+                            viewmodel.getPaypalEmailForDonation(donationId)
+                                .observe(viewLifecycleOwner) { paypalEmail ->
+                                    val amountInput = binding.addAmountTI.text.toString()
+                                    val currency = "EUR"
+                                    val paypalWebUrl =
+                                        "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=$paypalEmail&amount=$amountInput&currency_code=$currency"
+
+                                    val browserIntent =
+                                        Intent(Intent.ACTION_VIEW, Uri.parse(paypalWebUrl))
+                                    startActivity(browserIntent)
+                                }
+                        } else {
+                            // display error message if no amount was entered
+                            showErrorToast()
+                        }
+                    }
+
+                    // set OnClickListener do navigate back (when canceled)
+                    binding.cancelPaymentFAB.setOnClickListener {
+                        findNavController().navigateUp()
+                    }
+                }
+
+
             }
-        }
-
-        // set OnClickListener do navigate back (when canceled)
-        binding.cancelPaymentFAB.setOnClickListener {
-            findNavController().navigateUp()
-        }
     }
-
     private fun showErrorToast() {
         Toast.makeText(
             requireContext(),
@@ -80,5 +102,4 @@ class PaymentFragment : Fragment() {
             Toast.LENGTH_SHORT
         ).show()
     }
-    
 }

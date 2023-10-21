@@ -3,7 +3,7 @@ package com.example.lifechanger.data
 import com.example.lifechanger.R
 import com.example.lifechanger.data.model.Category
 
-class CategoryRepository() {
+class CategoryRepository {
 
     fun loadEnvironmentCategory(): MutableList<Category> {
         return mutableListOf(

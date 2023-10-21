@@ -14,7 +14,7 @@ class AboutBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentAboutBottomSheetBinding.inflate(inflater, container, false)
         return binding.root    }
 

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.SettingsFragment">
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/darkModeSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/languageSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,15 +40,5 @@
         android:text="@string/aboutApp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/languageSwitch" />
-
-    <TextView
-        android:id="@+id/feedbackTV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/feedback"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aboutTV" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

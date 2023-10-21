@@ -7,7 +7,7 @@ import com.example.lifechanger.api.Api
 import com.example.lifechanger.data.model.Quotes
 import com.example.lifechanger.db.QuotesDatabase
 
-class QuotesRepository(val quotesApi: Api, private val database: QuotesDatabase) {
+class QuotesRepository(private val quotesApi: Api, private val database: QuotesDatabase) {
 
     // livedata to create list of Quote objects which will be observed in fragment
     private val _quotes: MutableLiveData<List<Quotes>> = MutableLiveData<List<Quotes>>()

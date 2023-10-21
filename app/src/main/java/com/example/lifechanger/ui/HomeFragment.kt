@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
         }
 
         // setup of FAB to navigate to AddDonationFragment
-        binding.addDonationFAB.setOnClickListener() {
+        binding.addDonationFAB.setOnClickListener {
             val navController = findNavController()
             navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddDonationFragment())
         }

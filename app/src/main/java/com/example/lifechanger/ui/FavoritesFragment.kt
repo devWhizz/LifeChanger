@@ -49,9 +49,9 @@ class FavoritesFragment : Fragment() {
         // observe livedata of liked donations updates
         viewmodel.likedDonationsUpdated.observe(viewLifecycleOwner) {
             // get updated liked donations and update RecyclerView
-            val likedDonationIds = viewmodel.getLikedDonationIds()
-            val likedDonations = viewmodel.getDonationsByIds(likedDonationIds)
-            categoryAdapter.updateData(likedDonations)
+            val likedDonationIdsLive = viewmodel.getLikedDonationIds()
+            val likedDonationsLive = viewmodel.getDonationsByIds(likedDonationIdsLive)
+            categoryAdapter.updateData(likedDonationsLive)
         }
 
         binding.favoritesRV.addOnItemClickListener {

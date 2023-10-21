@@ -145,7 +145,7 @@ class AddDonationFragment : Fragment() {
                 val imageRef = storageRef.child("images/${UUID.randomUUID()}")
                 val uploadTask = imageRef.putFile(selectedImageUri!!)
 
-                uploadTask.addOnSuccessListener { taskSnapshot ->
+                uploadTask.addOnSuccessListener {
                     // provide download URL of uploaded image
                     imageRef.downloadUrl.addOnSuccessListener { uri ->
                         val imageString = uri.toString()
@@ -212,7 +212,7 @@ class AddDonationFragment : Fragment() {
         val alertDialog = AlertDialog.Builder(requireContext())
         alertDialog.setTitle(R.string.successTitleAdding)
         alertDialog.setMessage(getString(R.string.successMessageAdding))
-        alertDialog.setPositiveButton("OK") { dialog, which ->
+        alertDialog.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
         }
         alertDialog.show()

@@ -1,6 +1,5 @@
 package com.example.lifechanger.ui
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
@@ -8,8 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Switch
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.SwitchCompat
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.R
 import com.example.lifechanger.databinding.FragmentSettingsBinding
@@ -27,7 +26,6 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -35,7 +33,7 @@ class SettingsFragment : Fragment() {
         (activity as MainActivity).updateToolbarTitle(R.string.settings)
 
         // setup dark mode toggle
-        val darkModeSwitch: Switch = binding.darkModeSwitch
+        val darkModeSwitch: SwitchCompat = binding.darkModeSwitch
         darkModeSwitch.isChecked = isDarkModeEnabled()
 
         // set clicklistener for dark mode switch
@@ -49,17 +47,17 @@ class SettingsFragment : Fragment() {
         }
 
         // setup language toggle
-        val languageSwitch: Switch = binding.languageSwitch
-        languageSwitch.isChecked = isGermanLanguageSelected()
+        val languageSwitch: SwitchCompat = binding.languageSwitch
+        languageSwitch.isChecked = !isGermanLanguageSelected()
 
         // set clicklistener for language switch
         languageSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                setAppLanguage("de")
-            } else {
                 setAppLanguage("en")
+            } else {
+                setAppLanguage("de")
             }
-            saveLanguageStatus(isChecked)
+            saveLanguageStatus(!isChecked)
             // restart activity to apply language changes
             requireActivity().recreate()
         }

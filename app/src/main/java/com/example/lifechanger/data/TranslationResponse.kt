@@ -5,6 +5,8 @@ data class TranslationResponse(
 )
 
 data class Translation(
+
     val text: String,
     val detectedSourceLanguage: String = "de"
+
 )

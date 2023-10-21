@@ -281,4 +281,12 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return result
     }
 
+    // ### NOT IN USE DUE TO CHARACTER SAVING ###
+    fun translateDonationDescription(donation: Donation, targetLang: String): LiveData<String> {
+        val result = MutableLiveData<String>()
+        translateText(donation.description, targetLang).observeForever { translatedDescription ->
+            result.value = translatedDescription
+        }
+        return result
+    }
 }

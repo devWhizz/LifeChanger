@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/creatorPayment"
+                android:id="@+id/creatorPaymentTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/donateToTV" />
 
             <TextView
-                android:id="@+id/titlePayment"
+                android:id="@+id/titlePaymentTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -50,7 +50,7 @@
                 android:textAppearance="@style/HeadingMainText"
                 android:textSize="25sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/creatorPayment" />
+                app:layout_constraintTop_toBottomOf="@id/creatorPaymentTV" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/addAmountTIL"
@@ -64,7 +64,7 @@
                 app:boxStrokeColor="@color/main"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/titlePayment">
+                app:layout_constraintTop_toBottomOf="@id/titlePaymentTV">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/addAmountTI"
