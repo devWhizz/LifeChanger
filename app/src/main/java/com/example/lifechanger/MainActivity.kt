@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // function to update toolbar titles
+    // method to update toolbar titles
     fun updateToolbarTitle(stringResId: Int) {
         val newTitle = getString(stringResId)
         binding.toolbarTV.text = newTitle

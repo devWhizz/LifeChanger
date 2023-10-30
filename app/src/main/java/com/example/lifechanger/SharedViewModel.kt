@@ -193,6 +193,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return liveData
     }
 
+    // retrieve Paypal email address from Firebase
     fun getPaypalEmailForDonation(donationId: String): MutableLiveData<String?> {
         val liveData = MutableLiveData<String?>()
 
@@ -217,6 +218,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return liveData
     }
 
+    // search through donations
     fun searchDonations(query: String): LiveData<List<Donation>> {
         val liveData = MutableLiveData<List<Donation>>()
         val results = mutableListOf<Donation>()
@@ -237,6 +239,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
 
+    // translate method using Deepl API
     fun translateText(text: String, targetLang: String): LiveData<String> {
         Log.d("TranslateText", "Translating text: $text to target language: $targetLang")
         val result = MutableLiveData<String>()
@@ -268,11 +271,19 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return result
     }
 
+    // get dark mode status
+    fun isDarkModeEnabled(): Boolean {
+        val sharedPrefs = getApplication<Application>().getSharedPreferences("SharedPreferencesDarkMode", Context.MODE_PRIVATE)
+        return sharedPrefs.getBoolean("darkModeEnabled", false)
+    }
+
+    // get language status
     fun getTargetLanguage(): String {
         val sharedPrefs = getApplication<Application>().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
         return sharedPrefs.getString("targetLanguage", "de") ?: "de"
     }
 
+    // translate donation titles
     fun translateDonationTitle(donation: Donation, targetLang: String): LiveData<String> {
         val result = MutableLiveData<String>()
         translateText(donation.title, targetLang).observeForever { translatedTitle ->
@@ -282,6 +293,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     // ### NOT IN USE DUE TO CHARACTER SAVING ###
+    // translate donation descriptions
     fun translateDonationDescription(donation: Donation, targetLang: String): LiveData<String> {
         val result = MutableLiveData<String>()
         translateText(donation.description, targetLang).observeForever { translatedDescription ->

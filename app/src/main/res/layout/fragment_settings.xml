@@ -15,6 +15,9 @@
         android:height="48dp"
         android:padding="8dp"
         android:text="@string/darkMode"
+        app:useMaterialThemeColors="false"
+        app:thumbTint="@color/main"
+        app:trackTint="@color/third"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -27,6 +30,9 @@
         android:height="48dp"
         android:padding="8dp"
         android:text="@string/language"
+        app:useMaterialThemeColors="false"
+        app:thumbTint="@color/main"
+        app:trackTint="@color/third"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/darkModeSwitch"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
