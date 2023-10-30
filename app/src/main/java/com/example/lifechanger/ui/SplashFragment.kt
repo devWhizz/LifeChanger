@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.R
@@ -102,13 +101,8 @@ class SplashFragment : Fragment() {
 
     private fun navigateToHomeFragment() {
         val navController = findNavController()
-        val options = NavOptions.Builder()
-            .setEnterAnim(R.anim.fade_in)
-            .setExitAnim(R.anim.fade_out)
-            .build()
         navController.navigate(
-            SplashFragmentDirections.actionSplashFragmentToHomeFragment(),
-            options
+            SplashFragmentDirections.actionSplashFragmentToHomeFragment()
         )
     }
 

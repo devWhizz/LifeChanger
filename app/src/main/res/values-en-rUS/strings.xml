@@ -41,13 +41,14 @@
     <string name="addAccountInfo">Account Info</string>
     <string name="searchHint">Enter Search Term</string>
     <string name="darkMode">Dark Mode</string>
-    <string name="language">Change Language to German</string>
+    <string name="language">Change Language to English</string>
     <string name="aboutApp">About this App</string>
-    <string name="feedback">Feedback</string>
+    <string name="feedback">Send Feedback Email</string>
 
     <string name="successTitleAdding">Congratulatios!</string>
     <string name="successMessageAdding">Your fundraiser campaign has been successfully created!</string>
     <string name="errorMessageAdding">Please fill out all fields!</string>
+    <string name="errorMessageEmail">No Mailing App was found.</string>
 
     <string name="donateTo">You are donating to:</string>
     <string name="addAmount">Amount</string>

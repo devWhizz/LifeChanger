@@ -1,7 +1,13 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.LifeChanger" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <item name="colorPrimary">@color/main</item>
+        <item name="colorSecondary">@color/second</item>
+        <item name="colorTertiary">@color/third</item>
     </style>
+
+
+    <style name="Theme.LifeChanger" parent="Base.Theme.LifeChanger" />
+
 </resources>

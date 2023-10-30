@@ -60,14 +60,37 @@ class SearchFragment : Fragment() {
                     categoryAdapter.notifyDataSetChanged()
                     binding.noResultsTV.visibility = View.GONE
                 } else {
-                    viewmodel.searchDonations(query).observe(viewLifecycleOwner) { searchResults ->
-                        if (searchResults.isEmpty()) {
-                            binding.noResultsTV.visibility = View.VISIBLE
-                        } else {
-                            binding.noResultsTV.visibility = View.GONE
-                        }
-                        categoryAdapter.dataset = searchResults
-                        categoryAdapter.notifyDataSetChanged()
+                    // get language status
+                    val targetLang = viewmodel.getTargetLanguage()
+
+                    if (targetLang == "en") {
+                        // translate user's query from English to German
+                        viewmodel.translateText(query, "de")
+                            .observe(viewLifecycleOwner) { translatedQuery ->
+                                // search for donations with translated query
+                                viewmodel.searchDonations(translatedQuery)
+                                    .observe(viewLifecycleOwner) { searchResults ->
+                                        if (searchResults.isEmpty()) {
+                                            binding.noResultsTV.visibility = View.VISIBLE
+                                        } else {
+                                            binding.noResultsTV.visibility = View.GONE
+                                        }
+                                        categoryAdapter.dataset = searchResults
+                                        categoryAdapter.notifyDataSetChanged()
+                                    }
+                            }
+                    } else {
+                        // search for donations using the user's query (German)
+                        viewmodel.searchDonations(query)
+                            .observe(viewLifecycleOwner) { searchResults ->
+                                if (searchResults.isEmpty()) {
+                                    binding.noResultsTV.visibility = View.VISIBLE
+                                } else {
+                                    binding.noResultsTV.visibility = View.GONE
+                                }
+                                categoryAdapter.dataset = searchResults
+                                categoryAdapter.notifyDataSetChanged()
+                            }
                     }
                 }
                 viewmodel.lastSearchQuery = query
