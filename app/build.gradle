@@ -64,8 +64,12 @@ dependencies {
     // Coil
     implementation "io.coil-kt:coil:2.4.0"
 
-    // Room Dependencies
+    // Room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:2.5.2"
     implementation "androidx.room:room-ktx:2.5.2"
+
+    // PayPal
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
+
 }

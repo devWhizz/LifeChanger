@@ -24,7 +24,7 @@ To run the LifeChanger app on your local environment, follow these steps:
 
 ### Project Structure
 
-The project follows a standard Android app structure using the MVVM method. Here's an overview of the project structure:
+The project follows a standard Android app structure using the MVVM architecture. Here's an overview of the project structure:
 
 - **app**: This module contains the main app code and resources.
 - **data**: This package includes data repositories and models.

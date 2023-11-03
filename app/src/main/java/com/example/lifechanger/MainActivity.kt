@@ -97,10 +97,16 @@ class MainActivity : AppCompatActivity() {
                     // prevent navigating back to SplashFragment
                     return
                 }
+                if (currentDestinationId == R.id.categoryFragment) {
+                    // prevent navigating back to AddDonationFragment after creating a donation
+                    navController.navigate(R.id.homeFragment)
+                    return
+                }
                 Log.d("handleBackPressed", "Back Button pressed")
                 navController.navigateUp()
             }
         })
+
     }
 
     // method to update toolbar titles

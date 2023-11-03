@@ -42,13 +42,16 @@
     <string name="searchHint">Enter Search Term</string>
     <string name="darkMode">Dark Mode</string>
     <string name="language">Change Language to English</string>
+    <string name="languageInfo">Please keep in mind that the donation information is machine-translated to English. We do not guarantee their accuracy.</string>
     <string name="aboutApp">About this App</string>
     <string name="feedback">Send Feedback Email</string>
 
     <string name="successTitleAdding">Congratulatios!</string>
     <string name="successMessageAdding">Your fundraiser campaign has been successfully created!</string>
     <string name="errorMessageAdding">Please fill out all fields!</string>
+    <string name="errorMessagePayment">Please enter an amount!</string>
     <string name="errorMessageEmail">No Mailing App was found.</string>
+    <string name="errorMessageCofiguration">An error occurred, please try again..</string>
 
     <string name="donateTo">You are donating to:</string>
     <string name="addAmount">Amount</string>

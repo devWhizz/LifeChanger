@@ -46,7 +46,9 @@
     <string name="successTitleAdding">Gratulation!</string>
     <string name="successMessageAdding">Deine Spendenaktion wurde erfolgreich erstellt!</string>
     <string name="errorMessageAdding">Bitte fülle alle Felder aus!</string>
+    <string name="errorMessagePayment">Bitte gib einen Betrag ein!</string>
     <string name="errorMessageEmail">Keine E-Mail App gefunden.</string>
+    <string name="errorMessageCofiguration">Ein Fehler ist aufgetreten, bitte versuche es erneut.</string>
 
     <string name="donateTo">Du spendest an:</string>
     <string name="addAmount">Spendensumme</string>
@@ -54,6 +56,7 @@
     <string name="close">Schließen</string>
     <string name="noSearchResults">Keine passenden Spenden gefunden.</string>
     <string name="aboutApp">Über die App</string>
+    <string name="languageInfo">Bitte beachte, dass die Spendentexte maschinell auf English übersetzt werden. Für die Richtigkeit übernehmen wir keine Garantie.</string>
     <string name="feedback">Feedback E-MAil senden</string>
 
     <string name="about">LifeChanger ist mehr als nur eine mobile App - es ist eine Plattform für positive Veränderung!\nUnsere Vision ist es, Menschen, die etwas bewirken möchten, mit wirkungsvollen wohltätigen Zwecken zu verbinden. Ganz gleich, ob du dich für Umweltschutz, humanitäre Hilfe, Bildung oder einen anderen edlen Zweck begeisterst, LifeChanger steht dir zur Seite.\n\nWir stellen uns eine Welt vor, in der jede kleine Handlung zu bedeutenden Veränderungen führen kann. LifeChanger entstand aus der Idee, dass jede Spende das Potenzial hat, Leben und Gemeinschaften zu verändern. Wir sind entschlossen, einen Raum zu schaffen, in dem Veränderungsmacher wie ihr zusammen kommt, eure Geschichten teilt und die euch am meisten am Herzen liegenden Anliegen unterstützen könnt.\n\nErforsche eine vielfältige Palette von Spenden und Wohltätigkeitsorganisationen. Finde die Zwecke, die mit deinen Werten in Einklang stehen, und leiste deine Unterstützung.\n\nDu hast ein eigenes Spendenprojekt oder eine Sache, die dir besonders am Herzen liegt? Nutze LifeChanger, um eigene Spendenkampagnen zu erstellen und zu teilen.\n\nSchließ dich der Bewegung an. Indem du unsere App heruntergeladen hast, bist du Teil einer weltweiten Bewegung geworden. Setze dich für das ein, was dir wichtig ist, und zeige der Welt, dass positive Veränderung bei dir beginnt. Deine Handlungen haben das Potenzial, eine bessere Zukunft für alle zu schaffen.\n\nVielen Dank, dass du LifeChanger gewählt hast, die App, die an die transformative Kraft jeder Spende glaubt.\n\n<b>Gemeinsam können wir die Welt verändern - mit jeder guten Tat.</b></string>
