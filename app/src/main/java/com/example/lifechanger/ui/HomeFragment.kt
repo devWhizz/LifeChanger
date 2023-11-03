@@ -52,16 +52,4 @@ class HomeFragment : Fragment() {
             navController.navigate(HomeFragmentDirections.actionHomeFragmentToAddDonationFragment())
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-        // hide back button on HomeFragment
-        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarBackBTN)?.visibility = View.GONE
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // show back button when HomeFragment is destroyed
-        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarBackBTN)?.visibility = View.VISIBLE
-    }
 }

@@ -51,11 +51,6 @@ class MainActivity : AppCompatActivity() {
 
         val db = Firebase.firestore
 
-        // set up OnClickListener to navigate back to previous screen
-        binding.toolbarBackBTN.setOnClickListener {
-            navController.navigateUp()
-        }
-
         // set up BottomNavigationView with NavController
         binding.bottomNav.setupWithNavController(navController)
 
