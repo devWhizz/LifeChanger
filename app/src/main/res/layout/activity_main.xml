@@ -17,6 +17,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/toolbarBackBTN"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:onClick="onIconClick"
+        android:src="@drawable/arrow_left_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarTV"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbarTV"
+        app:tint="#FFFFFF" />
+
     <TextView
         android:id="@+id/toolbarTV"
         android:layout_width="wrap_content"
@@ -46,9 +59,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/main"
-        app:itemIconSize="30dp"
-        app:itemBackground="@color/main"
         app:itemActiveIndicatorStyle="@style/Theme.Material3.DayNight"
+        app:itemBackground="@color/main"
+        app:itemIconSize="30dp"
         app:itemIconTint="@color/icon"
         app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"

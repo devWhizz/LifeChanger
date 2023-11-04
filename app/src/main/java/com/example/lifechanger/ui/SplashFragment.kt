@@ -111,6 +111,7 @@ class SplashFragment : Fragment() {
         // hide toolbar and bottom menu on SplashFragment
         (activity as MainActivity?)?.findViewById<View>(R.id.toolBar)?.visibility = View.GONE
         (activity as MainActivity?)?.findViewById<View>(R.id.toolbarTV)?.visibility = View.GONE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarBackBTN)?.visibility = View.GONE
         (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.GONE
     }
 
@@ -119,6 +120,7 @@ class SplashFragment : Fragment() {
         // show toolbar and bottom menu when SplashFragment is destroyed
         (activity as MainActivity?)?.findViewById<View>(R.id.toolBar)?.visibility = View.VISIBLE
         (activity as MainActivity?)?.findViewById<View>(R.id.toolbarTV)?.visibility = View.VISIBLE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarBackBTN)?.visibility = View.VISIBLE
         (activity as MainActivity?)?.findViewById<View>(R.id.bottomNav)?.visibility = View.VISIBLE
     }
 }

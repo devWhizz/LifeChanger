@@ -51,6 +51,16 @@ class MainActivity : AppCompatActivity() {
 
         val db = Firebase.firestore
 
+        // set up OnClickListener to navigate back to previous screen
+        binding.toolbarBackBTN.setOnClickListener {
+            val currentDestinationId = navController.currentDestination?.id
+            if (currentDestinationId == R.id.categoryFragment) {
+                // prevent navigating back to AddDonationFragment after creating a donation
+                navController.navigate(R.id.homeFragment)
+                return@setOnClickListener
+            } else navController.navigateUp()
+        }
+
         // set up BottomNavigationView with NavController
         binding.bottomNav.setupWithNavController(navController)
 
@@ -97,8 +107,8 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.homeFragment)
                     return
                 }
-                Log.d("handleBackPressed", "Back Button pressed")
                 navController.navigateUp()
+                Log.d("handleBackPressed", "Back Button pressed")
             }
         })
 
