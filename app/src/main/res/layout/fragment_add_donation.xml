@@ -46,6 +46,7 @@
                 android:layout_marginEnd="32dp"
                 android:textSize="18sp"
                 app:boxStrokeColor="@color/main"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addDonationCategorySpinner">
@@ -68,6 +69,7 @@
                 android:layout_marginEnd="32dp"
                 android:textSize="18sp"
                 app:boxStrokeColor="@color/main"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addDonationTitleTIL">
@@ -90,6 +92,7 @@
                 android:layout_marginEnd="32dp"
                 android:textSize="18sp"
                 app:boxStrokeColor="@color/main"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/selectedImageIV">
@@ -137,6 +140,7 @@
                 android:layout_marginEnd="32dp"
                 android:textSize="18sp"
                 app:boxStrokeColor="@color/main"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addDonationCreatorTIL">
