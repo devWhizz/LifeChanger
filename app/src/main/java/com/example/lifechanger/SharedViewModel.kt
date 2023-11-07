@@ -225,10 +225,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
         donations.value?.let { allDonations ->
             for (donation in allDonations) {
-                if (donation.title.contains(query, true) || donation.creator.contains(
-                        query,
-                        true
-                    )
+                if (donation.title.contains(query, true) ||
+                    donation.creator.contains(query, true) ||
+                    donation.category.contains(query, true)
                 ) {
                     results.add(donation)
                 }
