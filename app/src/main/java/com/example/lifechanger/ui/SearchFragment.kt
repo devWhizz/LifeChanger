@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.lifechanger.MainActivity
@@ -20,6 +22,7 @@ class SearchFragment : Fragment() {
 
     private val viewmodel: SharedViewModel by activityViewModels()
     private lateinit var binding: FragmentSearchBinding
+    private lateinit var autoCompleteTextView: AutoCompleteTextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +49,63 @@ class SearchFragment : Fragment() {
                     categoryAdapter.dataset = searchResults
                     categoryAdapter.notifyDataSetChanged()
                 }
+        }
+
+        // initialize AutoCompleteTextView with search suggestions
+        autoCompleteTextView = binding.searchET
+        val searchSuggestions: Array<String> = if (viewmodel.getTargetLanguage() == "en") {
+            arrayOf(
+                "Climate",
+                "Water",
+                "Garbage",
+                "Disasters",
+                "Animal Welfare",
+                "Species Protection",
+                "Cats",
+                "Dogs",
+                "Horses",
+                "Children",
+                "Seniors",
+                "Homeless",
+                "Refugees",
+                "Inclusion",
+                "Education",
+                "Infrastructure"
+            )
+        } else {
+            arrayOf(
+                "Klima",
+                "Gewässer",
+                "Müll",
+                "Katastrophen",
+                "Tierschutz",
+                "Artenschutz",
+                "Katzen",
+                "Hunde",
+                "Pferde",
+                "Kinder",
+                "Senioren",
+                "Obdachlose",
+                "Flüchtlinge",
+                "Inklusion",
+                "Bildung",
+                "Infrastruktur"
+            )
+        }
+
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_dropdown_item_1line,
+            searchSuggestions
+        )
+        autoCompleteTextView.setAdapter(adapter)
+
+        // show suggestions after typing 1 character
+        autoCompleteTextView.threshold = 1
+
+        autoCompleteTextView.setOnItemClickListener { parent, _, position, _ ->
+            val selectedSuggestion = parent.getItemAtPosition(position) as String
+            autoCompleteTextView.setText(selectedSuggestion)
         }
 
         binding.searchET.addTextChangedListener(object : TextWatcher {

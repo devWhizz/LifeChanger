@@ -29,7 +29,6 @@
     <string name="payment">Payment</string>
     <string name="settings">Settings</string>
     <string name="search">Search</string>
-    <string name="paypalCheck">Data check</string>
     <string name="thankyou">Thank you</string>
     <string name="thankyouText">Your donation is a true blessing that brings us closer to our goal. With your generous support, we can continue to make a positive impact and create change. Your contribution is more than just financial help; it is an expression of solidarity and belief in our mission. Thank you so much for your trust in our work. Together we can make the world a better place!</string>
     <string name="backToHome">Back to Home Screen</string>
@@ -59,7 +58,7 @@
 
     <string name="donateTo">You are donating to:</string>
     <string name="addAmount">Amount</string>
-    <string name="PayPal">Check data</string>
+    <string name="PayPal">Pay with PayPal</string>
     <string name="close">Close</string>
     <string name="noSearchResults">No matching donations found.</string>
 

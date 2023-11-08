@@ -61,6 +61,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="32dp"
                 android:textSize="18sp"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Medium"
                 app:boxStrokeColor="@color/main"
                 app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -106,6 +107,7 @@
         android:src="@drawable/cancel_icon"
         app:backgroundTint="@color/second"
         app:maxImageSize="40dp"
-        app:tint="@color/icon" />
+        app:tint="@color/icon"
+        android:focusable="true" />
 
 </FrameLayout>

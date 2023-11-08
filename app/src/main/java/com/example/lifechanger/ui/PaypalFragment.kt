@@ -40,18 +40,27 @@ class PaypalFragment : Fragment() {
         val donationAmount = args.donationAmount
         val donationId = args.donationId
 
-        // set toolbar title
-        (activity as MainActivity).updateToolbarTitle(R.string.paypalCheck)
-
         viewmodel.getPaypalEmailForDonation(donationId)
             .observe(viewLifecycleOwner) { paypalEmail ->
                 val currency = "EUR"
 
                 val paypalWebView = binding.paypalWebView
+
+                // get language status
+                val targetLang = viewmodel.getTargetLanguage()
+                Log.d("Translation", "Target language is: $targetLang")
+
+                // get language status
+                val targetMode = viewmodel.isDarkModeEnabled()
+
                 // load Paypal page
                 paypalWebView.settings.javaScriptEnabled = true
-                paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
-
+                when {
+                    targetLang == "de" && !targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-de?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
+                    targetLang == "de" && targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-de-dark?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
+                    targetLang == "en" && !targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-en?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
+                    targetLang == "en" && targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-en-dark?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
+                }
                 paypalWebView.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView?, url: String?) {
                         super.onPageFinished(view, url)
@@ -72,5 +81,22 @@ class PaypalFragment : Fragment() {
         binding.cancelPayPalFAB.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // hide toolbarPaypalFragment
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolBar)?.visibility = View.GONE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarTV)?.visibility = View.GONE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarBackBTN)?.visibility = View.GONE
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // show toolbar when PaypalFragment is destroyed
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolBar)?.visibility = View.VISIBLE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarTV)?.visibility = View.VISIBLE
+        (activity as MainActivity?)?.findViewById<View>(R.id.toolbarBackBTN)?.visibility =
+            View.VISIBLE
     }
 }
