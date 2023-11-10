@@ -1,7 +1,5 @@
 # LifeChanger | Donation App
 
-<br>
-
 ### This app allows users to discover, support and donate to various causes and charitable organizations as well as creating their own fundraisers.
 
 <br>
@@ -33,6 +31,8 @@ To run the LifeChanger app on your local environment, follow these steps:
 <br>
 
 ---
+
+<br>
 
 ### Project Structure
 
@@ -84,6 +84,8 @@ Resources including layout files, strings, and drawables.
 <br>
 
 ---
+
+<br>
 
 ### Key Files
 
@@ -153,6 +155,8 @@ This fragment provides users with app settings and preferences. It includes opti
 
 ---
 
+<br>
+
 ### Key Features
 
 <br>
@@ -200,6 +204,8 @@ Users can make a donation to support a cause they care about:
 <br>
 
 ---
+
+<br>
 
 ### Contributing
 
