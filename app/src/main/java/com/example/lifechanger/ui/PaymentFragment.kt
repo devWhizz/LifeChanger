@@ -62,7 +62,7 @@ class PaymentFragment : Fragment() {
 
                     binding.paypalBTN.setOnClickListener {
 
-                        val amount = binding.addAmountTI.text.toString()
+                        val amount = binding.addAccountInfoTI.text.toString()
 
                         if (amount.isNotEmpty()) {
                             val navController = findNavController()
