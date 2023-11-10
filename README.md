@@ -1,6 +1,6 @@
 # LifeChanger | Donation App
 
----
+<br>
 
 ### This app allows users to discover, support and donate to various causes and charitable organizations as well as creating their own fundraisers.
 
