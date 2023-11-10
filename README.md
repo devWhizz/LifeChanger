@@ -9,7 +9,6 @@
 ![](https://mediadesign.solutions/wp-content/uploads/2023/11/github-home.png)
 ![](https://mediadesign.solutions/wp-content/uploads/2023/11/github-category.png)
 ![](https://mediadesign.solutions/wp-content/uploads/2023/11/github-detail.png)
-![](https://mediadesign.solutions/wp-content/uploads/2023/11/github-success.png)
 ![](https://mediadesign.solutions/wp-content/uploads/2023/11/github-search.png)
 
 <br>
@@ -35,7 +34,7 @@ To run the LifeChanger app on your local environment, follow these steps:
 
 ---
 
-## Project Structure
+### Project Structure
 
 
 The project follows a standard Android app structure using the MVVM architecture. Here's an overview of the project structure:
@@ -86,7 +85,7 @@ Resources including layout files, strings, and drawables.
 
 ---
 
-## Key Files
+### Key Files
 
 Here are some of the projects key files:
 
@@ -154,7 +153,7 @@ This fragment provides users with app settings and preferences. It includes opti
 
 ---
 
-## Key Features
+### Key Features
 
 <br>
 
@@ -201,8 +200,6 @@ Users can make a donation to support a cause they care about:
 <br>
 
 ---
-
-<br>
 
 ### Contributing
 
