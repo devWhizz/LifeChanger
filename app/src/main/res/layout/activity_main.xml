@@ -19,8 +19,8 @@
 
     <ImageView
         android:id="@+id/toolbarBackBTN"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginStart="16dp"
         android:clickable="true"
         android:onClick="onIconClick"
@@ -28,7 +28,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/toolbarTV"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbarTV"
-        app:tint="#FFFFFF" />
+        app:tint="#FFFFFF"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/toolbarTV"

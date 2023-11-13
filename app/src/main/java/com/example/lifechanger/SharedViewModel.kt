@@ -45,6 +45,8 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         loadQuotes()
     }
 
+    //region QUOTES
+
     // starting Coroutines to run processes while viewmodel is active
     // load data from API in repository
     private fun loadQuotes() {
@@ -63,8 +65,9 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return repositoryQuotesApi.getRandomEntry()
     }
 
-    private val _donations = MutableLiveData<List<Donation>>()
-    val donations: LiveData<List<Donation>> get() = _donations
+    //endregion
+
+    //region CATEGORIES
 
     // list of Environment category elements for HomeFragment
     private val _environmentCategory: MutableLiveData<List<Category>> =
@@ -90,6 +93,12 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val developmentAidCategory: LiveData<List<Category>>
         get() = _developmentAidCategory
 
+    //endregion
+
+    //region DONATIONS
+
+    private val _donations = MutableLiveData<List<Donation>>()
+    val donations: LiveData<List<Donation>> get() = _donations
 
     // starting Coroutines to run processes while viewmodel is active
     // load data from Firebase into repository
@@ -110,58 +119,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 }
                 _donations.value = donations
             }
-    }
-
-    // liked donations
-    private val likedDonations = MutableLiveData<List<Donation>>()
-
-    // liveData to notify FavoritesFragment about changes in liked donations
-    private val _likedDonationsUpdated = MutableLiveData<Unit>()
-    val likedDonationsUpdated: LiveData<Unit> get() = _likedDonationsUpdated
-
-    // add liked donations to recyclerview (FavoritesFragment)
-    fun addToLikedDonations(donation: Donation) {
-        sharedPreferences.edit()
-            .putBoolean(donation.id, true)
-            .apply()
-
-        Log.d("SharedViewModel", "Donation with ID ${donation.id} was added to SharedPreferences.")
-
-        val currentLikedDonations = likedDonations.value ?: emptyList()
-        val updatedLikedDonations = currentLikedDonations.toMutableList()
-        updatedLikedDonations.add(donation)
-        likedDonations.value = updatedLikedDonations
-    }
-
-    // remove liked donations from recyclerview (FavoritesFragment)
-    fun removeFromLikedDonations(donation: Donation) {
-        sharedPreferences.edit()
-            .putBoolean(donation.id, false)
-            .apply()
-
-        Log.d(
-            "SharedViewModel",
-            "Donation with ID ${donation.id} was removed from SharedPreferences."
-        )
-
-        val currentLikedDonations = likedDonations.value ?: emptyList()
-        val updatedLikedDonations = currentLikedDonations.toMutableList()
-        updatedLikedDonations.remove(donation)
-        likedDonations.value = updatedLikedDonations
-
-        // notify FavoritesFragment about changes
-        _likedDonationsUpdated.value = Unit
-    }
-
-    fun isLiked(donationId: String): Boolean {
-        return sharedPreferences.getBoolean(donationId, false)
-    }
-
-    fun getLikedDonationIds(): Set<String> {
-        return sharedPreferences.all
-            .filter { it.value as Boolean }
-            .map { it.key }
-            .toSet()
     }
 
     fun getDonationsByIds(ids: Set<String>): List<Donation> {
@@ -218,6 +175,10 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return liveData
     }
 
+    //endregion
+
+    //region SEARCH FEATURE
+
     // search through donations
     fun searchDonations(query: String): LiveData<List<Donation>> {
         val liveData = MutableLiveData<List<Donation>>()
@@ -237,6 +198,71 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return liveData
     }
 
+    //endregion
+
+    //region LIKE FEATURE
+
+    // liked donations
+    private val likedDonations = MutableLiveData<List<Donation>>()
+
+    // liveData to notify FavoritesFragment about changes in liked donations
+    private val _likedDonationsUpdated = MutableLiveData<Unit>()
+    val likedDonationsUpdated: LiveData<Unit> get() = _likedDonationsUpdated
+
+    // add liked donations to recyclerview (FavoritesFragment)
+    fun addToLikedDonations(donation: Donation) {
+        sharedPreferences.edit()
+            .putBoolean(donation.id, true)
+            .apply()
+
+        Log.d("SharedViewModel", "Donation with ID ${donation.id} was added to SharedPreferences.")
+
+        val currentLikedDonations = likedDonations.value ?: emptyList()
+        val updatedLikedDonations = currentLikedDonations.toMutableList()
+        updatedLikedDonations.add(donation)
+        likedDonations.value = updatedLikedDonations
+    }
+
+    // remove liked donations from recyclerview (FavoritesFragment)
+    fun removeFromLikedDonations(donation: Donation) {
+        sharedPreferences.edit()
+            .putBoolean(donation.id, false)
+            .apply()
+
+        Log.d(
+            "SharedViewModel",
+            "Donation with ID ${donation.id} was removed from SharedPreferences."
+        )
+
+        val currentLikedDonations = likedDonations.value ?: emptyList()
+        val updatedLikedDonations = currentLikedDonations.toMutableList()
+        updatedLikedDonations.remove(donation)
+        likedDonations.value = updatedLikedDonations
+
+        // notify FavoritesFragment about changes
+        _likedDonationsUpdated.value = Unit
+    }
+
+    fun isLiked(donationId: String): Boolean {
+        return sharedPreferences.getBoolean(donationId, false)
+    }
+
+    fun getLikedDonationIds(): Set<String> {
+        return sharedPreferences.all
+            .filter { it.value as Boolean }
+            .map { it.key }
+            .toSet()
+    }
+
+    //endregion
+
+    //region TRANSLATION FEATURE
+
+    // get language status
+    fun getTargetLanguage(): String {
+        val sharedPrefs = getApplication<Application>().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
+        return sharedPrefs.getString("targetLanguage", "de") ?: "de"
+    }
 
     // translate method using Deepl API
     fun translateText(text: String, targetLang: String): LiveData<String> {
@@ -270,18 +296,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return result
     }
 
-    // get dark mode status
-    fun isDarkModeEnabled(): Boolean {
-        val sharedPrefs = getApplication<Application>().getSharedPreferences("SharedPreferencesDarkMode", Context.MODE_PRIVATE)
-        return sharedPrefs.getBoolean("darkModeEnabled", false)
-    }
-
-    // get language status
-    fun getTargetLanguage(): String {
-        val sharedPrefs = getApplication<Application>().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
-        return sharedPrefs.getString("targetLanguage", "de") ?: "de"
-    }
-
     // translate donation titles
     fun translateDonationTitle(donation: Donation, targetLang: String): LiveData<String> {
         val result = MutableLiveData<String>()
@@ -299,5 +313,13 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             result.value = translatedDescription
         }
         return result
+    }
+
+    //endregion
+
+    // get dark mode status
+    fun isDarkModeEnabled(): Boolean {
+        val sharedPrefs = getApplication<Application>().getSharedPreferences("SharedPreferencesDarkMode", Context.MODE_PRIVATE)
+        return sharedPrefs.getBoolean("darkModeEnabled", false)
     }
 }

@@ -36,7 +36,6 @@ class CategoryAdapter(
 
         // get language status
         val targetLang = viewmodel.getTargetLanguage()
-        Log.d("Translation", "Target language is: $targetLang")
 
         if (targetLang == "en") {
             // settings to translate donation title with deepL API

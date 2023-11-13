@@ -11,8 +11,6 @@ class QuotesRepository(private val quotesApi: Api, private val database: QuotesD
 
     // livedata to create list of Quote objects which will be observed in fragment
     private val _quotes: MutableLiveData<List<Quotes>> = MutableLiveData<List<Quotes>>()
-    val quotes: LiveData<List<Quotes>>
-        get() = _quotes
 
     // asynchronous loading fun to update livedata and saving/writing possibly changed data
     suspend fun loadQuotes() {
@@ -32,11 +30,6 @@ class QuotesRepository(private val quotesApi: Api, private val database: QuotesD
         } catch (e: Exception) {
             Log.d("Repository", "Error in database: $e")
         }
-    }
-
-    // retrieve all quotes stored in database and returns them as LiveData
-    fun getAllQuotesFromDatabase(): LiveData<List<Quotes>> {
-        return database.quotesDao.getAll()
     }
 
     fun getRandomEntry(): LiveData<Quotes> {

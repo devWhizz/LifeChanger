@@ -48,7 +48,7 @@ class DonationDetailFragment : Fragment() {
 
                     if (targetLang == "en") {
                         // settings to translate category title, donation title and donation description with deepL API
-                        viewmodel.translateText(donation.title, targetLang)
+                        viewmodel.translateText(donation.category, targetLang)
                             .observe(viewLifecycleOwner) { translatedCategory ->
                                 (activity as MainActivity).updateToolbarTitleDetail(
                                     translatedCategory
@@ -64,12 +64,14 @@ class DonationDetailFragment : Fragment() {
 //                                binding.donationDescriptionDetailTV.text = translatedDescription
 //                            }
                     } else {
-                        (activity as MainActivity).updateToolbarTitleDetail(donation.title)
+                        (activity as MainActivity).updateToolbarTitleDetail(donation.category)
                         binding.donationTitleDetailTV.text = donation.title
 //                        binding.donationDescriptionDetailTV.text = donation.description
                     }
 
                     binding.donationCompanyDetailTV.text = donation.creator
+
+// ### has to go up into "else" ###
                     binding.donationDescriptionDetailTV.text = donation.description
 
                     // use Coil to load images

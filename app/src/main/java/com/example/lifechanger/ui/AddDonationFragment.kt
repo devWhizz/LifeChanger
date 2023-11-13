@@ -164,8 +164,7 @@ class AddDonationFragment : Fragment() {
                         // add donation to Firestore
                         firestore.collection("donations")
                             .add(donation)
-                            .addOnSuccessListener { documentReference ->
-                                val donationId = documentReference.id
+                            .addOnSuccessListener {
 
                                 // navigate back to CategoryFragment showing appropriate content
                                 navigateToCategoryFragment(selectedCategoryTitle)
