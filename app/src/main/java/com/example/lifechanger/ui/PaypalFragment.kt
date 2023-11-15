@@ -48,9 +48,8 @@ class PaypalFragment : Fragment() {
 
                 // get language status
                 val targetLang = viewmodel.getTargetLanguage()
-                Log.d("Translation", "Target language is: $targetLang")
 
-                // get language status
+                // get dark mode status
                 val targetMode = viewmodel.isDarkModeEnabled()
 
                 // load Paypal page

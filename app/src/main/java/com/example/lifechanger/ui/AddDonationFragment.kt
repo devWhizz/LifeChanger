@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,11 +14,9 @@ import android.widget.AdapterView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.lifechanger.MainActivity
 import com.example.lifechanger.R
-import com.example.lifechanger.SharedViewModel
 import com.example.lifechanger.data.model.Donation
 import com.example.lifechanger.databinding.FragmentAddDonationBinding
 import com.google.firebase.firestore.FirebaseFirestore
@@ -30,14 +27,10 @@ class AddDonationFragment : Fragment() {
 
     private lateinit var binding: FragmentAddDonationBinding
 
-    // assign viewmodel to SharedViewModel
-    private val viewmodel: SharedViewModel by activityViewModels()
-
     private lateinit var imagePicker: ActivityResultLauncher<Intent>
     private var selectedImageUri: Uri? = null
 
     private val firestore = FirebaseFirestore.getInstance()
-
 
 
     override fun onCreateView(
@@ -54,10 +47,6 @@ class AddDonationFragment : Fragment() {
 
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.addDonation)
-
-        // get language status
-        val targetLang = viewmodel.getTargetLanguage()
-        Log.d("Translation", "Target language is: $targetLang")
 
         // declare variable to store selected Spinner title
         var selectedCategoryTitle = ""

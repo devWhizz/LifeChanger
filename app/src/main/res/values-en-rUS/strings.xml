@@ -51,7 +51,7 @@
 
     <string name="successTitleAdding">Congratulatios!</string>
     <string name="successMessageAdding">Your fundraiser campaign has been successfully created!</string>
-    <string name="errorMessageAdding">Please fill out all fields!</string>
+    <string name="errorMessageAdding">Please fill in all fields!</string>
     <string name="errorMessagePayment">Please enter an amount!</string>
     <string name="errorMessageEmail">No Mailing App was found.</string>
     <string name="errorMessageCofiguration">An error occurred, please try again..</string>

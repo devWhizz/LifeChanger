@@ -1,7 +1,6 @@
 package com.example.lifechanger.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +43,6 @@ class DonationDetailFragment : Fragment() {
                 if (donation != null) {
                     // get language status
                     val targetLang = viewmodel.getTargetLanguage()
-                    Log.d("Translation", "Target language is: $targetLang")
 
                     if (targetLang == "en") {
                         // settings to translate category title, donation title and donation description with deepL API

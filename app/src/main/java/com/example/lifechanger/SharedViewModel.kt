@@ -106,7 +106,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         firestore.collection("donations")
             .addSnapshotListener { querySnapshot, e ->
                 if (e != null) {
-                    Log.e("TAG", "Error getting donations", e)
+                    Log.e("SharedViewModel", "Error getting donations", e)
                     return@addSnapshotListener
                 }
 
@@ -135,7 +135,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             .whereEqualTo("id", donationId)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
-                    Log.e("Viewmodel", "Error getting donations by id", exception)
+                    Log.e("SharedViewModel", "Error getting donations by id", exception)
                 } else {
                     var donation: Donation? = null
                     if (snapshot != null) {
@@ -158,7 +158,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             .whereEqualTo("id", donationId)
             .addSnapshotListener { snapshot, exception ->
                 if (exception != null) {
-                    Log.e("Viewmodel", "Error getting donations by id", exception)
+                    Log.e("SharedViewModel", "Error getting donations by id", exception)
                     liveData.postValue(null)
                 } else {
                     var paypalEmail: String? = null
@@ -215,7 +215,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
             .putBoolean(donation.id, true)
             .apply()
 
-        Log.d("SharedViewModel", "Donation with ID ${donation.id} was added to SharedPreferences.")
+        Log.d("SharedViewModel", "Donation with ID ${donation.id} was added as liked to SharedPreferences.")
 
         val currentLikedDonations = likedDonations.value ?: emptyList()
         val updatedLikedDonations = currentLikedDonations.toMutableList()
@@ -231,7 +231,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
         Log.d(
             "SharedViewModel",
-            "Donation with ID ${donation.id} was removed from SharedPreferences."
+            "Donation with ID ${donation.id} was removed as liked from SharedPreferences."
         )
 
         val currentLikedDonations = likedDonations.value ?: emptyList()
@@ -305,7 +305,6 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         return result
     }
 
-    // ### NOT IN USE DUE TO CHARACTER SAVING ###
     // translate donation descriptions
     fun translateDonationDescription(donation: Donation, targetLang: String): LiveData<String> {
         val result = MutableLiveData<String>()
