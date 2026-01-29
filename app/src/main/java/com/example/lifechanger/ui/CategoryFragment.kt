@@ -42,9 +42,9 @@ class CategoryFragment : Fragment() {
 
         // set toolbar title
         if (selectedCategory != null) {
-            if (targetLang == "en") {
+            if (targetLang.uppercase().startsWith("EN")) {
                 // settings to translate category title with deepL API
-                viewmodel.translateText(selectedCategory, targetLang)
+                viewmodel.translateCategory(selectedCategory, targetLang)
                     .observe(viewLifecycleOwner) { translatedCategory ->
                         (activity as MainActivity).updateToolbarTitleDetail(translatedCategory)
                     }

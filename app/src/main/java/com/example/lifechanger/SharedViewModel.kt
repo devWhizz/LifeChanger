@@ -256,12 +256,31 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
 
     //endregion
 
+    // --- TRANSLATION CACHE (lebt nur solange die App läuft) ---
+    private val translationCache = mutableMapOf<String, String>()
+
+    // verhindert doppelte Requests für denselben Text (z.B. beim Scrollen)
+    private val inFlight = mutableMapOf<String, MutableLiveData<String>>()
+
+    private fun cacheKey(text: String, targetLang: String): String {
+        return "${targetLang.uppercase()}|${text.trim()}"
+    }
+
+    private fun sentenceCase(s: String): String {
+        val t = s.trim()
+        if (t.isEmpty()) return t
+        return t.replaceFirstChar { ch ->
+            if (ch.isLowerCase()) ch.titlecase() else ch.toString()
+        }
+    }
+
     //region TRANSLATION FEATURE
 
     // get language status
     fun getTargetLanguage(): String {
-        val sharedPrefs = getApplication<Application>().getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
-        return sharedPrefs.getString("targetLanguage", "de") ?: "de"
+        val sharedPrefs = getApplication<Application>()
+            .getSharedPreferences("SharedPreferencesLanguage", Context.MODE_PRIVATE)
+        return (sharedPrefs.getString("targetLanguage", "DE") ?: "DE").uppercase()
     }
 
     // translate method using Deepl API
@@ -269,10 +288,40 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         Log.d("TranslateText", "Translating text: $text to target language: $targetLang")
         val result = MutableLiveData<String>()
 
-        val deepLApiKey = ApiConfig.deepLApiKey
+        val normalizedTargetLang = targetLang.uppercase()
+        val key = cacheKey(text, normalizedTargetLang)
+
+
+// 1) Cache hit → sofort zurück
+        translationCache[key]?.let { cached ->
+            Log.d("TranslateText", "CACHE HIT for key=$key")
+            result.postValue(cached)
+            return result
+        }
+
+
+// 2) Request läuft schon → gleiche LiveData zurück
+        inFlight[key]?.let { existing ->
+            Log.d("TranslateText", "IN-FLIGHT reuse for key=$key")
+            return existing
+        }
+        inFlight[key] = result
+
         val deepLApiService: DeepLApiService by lazy { retrofitDeepL.create(DeepLApiService::class.java) }
 
-        val call = deepLApiService.translateText(deepLApiKey, text, targetLang)
+
+// DeepL verlangt seit Nov 2025 Header-Auth:
+        val authHeader = "DeepL-Auth-Key ${ApiConfig.deepLApiKey}"
+
+
+// targetLang sicher in DeepL-Format:
+
+
+        val call = deepLApiService.translateText(
+            authorization = authHeader,
+            textToTranslate = text,
+            targetLang = normalizedTargetLang
+        )
 
         call.enqueue(object : Callback<TranslationResponse> {
             override fun onResponse(
@@ -280,17 +329,28 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                 response: Response<TranslationResponse>
             ) {
                 if (response.isSuccessful && response.body() != null) {
-                    result.postValue(response.body()!!.translations.first().text)
-                    Log.d(
-                        "TranslateText",
-                        "Translation successful: ${response.body()!!.translations.first().text}"
-                    )
+                    val translated = response.body()!!.translations.firstOrNull()?.text ?: text
+
+                    translationCache[key] = translated
+
+                    result.postValue(translated)
+                    Log.d("TranslateText", "Translation successful: $translated")
+                } else {
+                    val err = response.errorBody()?.string()
+                    result.postValue(text) // fallback
+                    Log.e("TranslateText", "DeepL error ${response.code()}: $err")
                 }
+
+                inFlight.remove(key)
+
             }
 
             override fun onFailure(call: Call<TranslationResponse>, t: Throwable) {
                 result.postValue(text)
-                Log.e("TranslateText", "Translation failed: $t")
+                Log.e("TranslateText", "Translation failed", t)
+
+                inFlight.remove(key)
+
             }
         })
         return result
@@ -299,19 +359,23 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     // translate donation titles
     fun translateDonationTitle(donation: Donation, targetLang: String): LiveData<String> {
         val result = MutableLiveData<String>()
-        translateText(donation.title, targetLang).observeForever { translatedTitle ->
-            result.value = translatedTitle
+        translateText(donation.title, targetLang).observeForever { translated ->
+            result.value = sentenceCase(translated)
+        }
+        return result
+    }
+
+    fun translateCategory(category: String, targetLang: String): LiveData<String> {
+        val result = MutableLiveData<String>()
+        translateText(category, targetLang).observeForever { translated ->
+            result.value = sentenceCase(translated)
         }
         return result
     }
 
     // translate donation descriptions
     fun translateDonationDescription(donation: Donation, targetLang: String): LiveData<String> {
-        val result = MutableLiveData<String>()
-        translateText(donation.description, targetLang).observeForever { translatedDescription ->
-            result.value = translatedDescription
-        }
-        return result
+        return translateText(donation.description, targetLang)
     }
 
     //endregion

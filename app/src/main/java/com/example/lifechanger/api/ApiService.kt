@@ -1,6 +1,5 @@
 package com.example.lifechanger.api
 
-import com.example.lifechanger.ApiConfig
 import com.example.lifechanger.data.TranslationResponse
 import com.example.lifechanger.data.model.Quotes
 import com.squareup.moshi.Moshi
@@ -10,7 +9,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Header
 
 // implementing moshi
 private val moshi = Moshi.Builder()
@@ -26,7 +27,7 @@ val retrofitQuotes: Retrofit = Retrofit.Builder()
 // implementing retrofit for deepL
 val retrofitDeepL: Retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))
-    .baseUrl("https://api-free.deepl.com/v2/")
+    .baseUrl("https://api-free.deepl.com/")
     .build()
 
 interface QuotesApiService {
@@ -37,13 +38,15 @@ interface QuotesApiService {
 }
 
 interface DeepLApiService {
-    @POST("translate")
-    fun translateText(
-        @Query("auth_key") authKey: String = ApiConfig.deepLApiKey,
-        @Query("text") textToTranslate: String,
-        @Query("target_lang") targetLang: String
-    ): Call<TranslationResponse>
 
+
+    @FormUrlEncoded
+    @POST("v2/translate")
+    fun translateText(
+        @Header("Authorization") authorization: String,
+        @Field("text") textToTranslate: String,
+        @Field("target_lang") targetLang: String
+    ): Call<TranslationResponse>
 }
 
 // access retrofit services

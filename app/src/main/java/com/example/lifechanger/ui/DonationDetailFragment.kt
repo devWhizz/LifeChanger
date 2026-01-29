@@ -44,30 +44,38 @@ class DonationDetailFragment : Fragment() {
                     // get language status
                     val targetLang = viewmodel.getTargetLanguage()
 
-                    if (targetLang == "en") {
-                        // settings to translate category title, donation title and donation description with deepL API
-                        viewmodel.translateText(donation.category, targetLang)
+                    binding.donationCompanyDetailTV.text = donation.creator
+
+                    if (targetLang.equals("EN", ignoreCase = true)) {
+
+
+                        viewmodel.translateCategory(donation.category, "EN")
                             .observe(viewLifecycleOwner) { translatedCategory ->
-                                (activity as MainActivity).updateToolbarTitleDetail(
-                                    translatedCategory
-                                )
+                                (activity as MainActivity).updateToolbarTitleDetail(translatedCategory)
                             }
-                        viewmodel.translateDonationTitle(donation, targetLang)
-                            .observe((view.context as LifecycleOwner)) { translatedTitle ->
+
+
+                        viewmodel.translateDonationTitle(donation, "EN")
+                            .observe(viewLifecycleOwner) { translatedTitle ->
                                 binding.donationTitleDetailTV.text = translatedTitle
                             }
-// ### NOT IN USE DUE TO CHARACTER SAVING ###
-//                        viewmodel.translateDonationDescription(donation, targetLang)
-//                            .observe((view.context as LifecycleOwner)) { translatedDescription ->
-//                                binding.donationDescriptionDetailTV.text = translatedDescription
-//                            }
+
+
+// Wenn du Description wieder nutzen willst:
+                        viewmodel.translateDonationDescription(donation, "EN")
+                            .observe(viewLifecycleOwner) { translatedDescription ->
+                                binding.donationDescriptionDetailTV.text = translatedDescription
+                            }
+
+
                     } else {
+
+
                         (activity as MainActivity).updateToolbarTitleDetail(donation.category)
                         binding.donationTitleDetailTV.text = donation.title
-//                        binding.donationDescriptionDetailTV.text = donation.description
+                        binding.donationDescriptionDetailTV.text = donation.description
                     }
 
-                    binding.donationCompanyDetailTV.text = donation.creator
 
 // ### has to go up into "else" ###
                     binding.donationDescriptionDetailTV.text = donation.description

@@ -55,10 +55,10 @@ class PaypalFragment : Fragment() {
                 // load Paypal page
                 paypalWebView.settings.javaScriptEnabled = true
                 when {
-                    targetLang == "de" && !targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-de?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
-                    targetLang == "de" && targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-de-dark?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
-                    targetLang == "en" && !targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-en?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
-                    targetLang == "en" && targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-en-dark?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
+                    targetLang == "DE" && !targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-de?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
+                    targetLang == "DE" && targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-de-dark?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
+                    targetLang == "EN" && !targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-en?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
+                    targetLang == "EN" && targetMode -> paypalWebView.loadUrl("https://mediadesign.solutions/lifechanger-en-dark?description=$donationCreator&amount=$donationAmount&currency=$currency&recipient_email=$paypalEmail")
                 }
                 paypalWebView.webViewClient = object : WebViewClient() {
                     override fun onPageFinished(view: WebView?, url: String?) {

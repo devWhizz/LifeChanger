@@ -37,7 +37,7 @@ class CategoryAdapter(
         // get language status
         val targetLang = viewmodel.getTargetLanguage()
 
-        if (targetLang == "en") {
+        if (targetLang.uppercase().startsWith("EN")) {
             // settings to translate donation title with deepL API
             viewmodel.translateDonationTitle(item, targetLang)
                 .observe((holder.itemView.context as LifecycleOwner)) { translatedTitle ->

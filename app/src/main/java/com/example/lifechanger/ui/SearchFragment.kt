@@ -37,6 +37,7 @@ class SearchFragment : Fragment() {
 
         // set toolbar title
         (activity as MainActivity).updateToolbarTitle(R.string.search)
+        val isEnglish = viewmodel.getTargetLanguage().equals("EN", ignoreCase = true)
 
         val categoryAdapter = CategoryAdapter(emptyList(), viewmodel)
         binding.searchRV.adapter = categoryAdapter
@@ -53,7 +54,7 @@ class SearchFragment : Fragment() {
 
         // initialize AutoCompleteTextView with search suggestions
         autoCompleteTextView = binding.searchET
-        val searchSuggestions: Array<String> = if (viewmodel.getTargetLanguage() == "en") {
+        val searchSuggestions: Array<String> = if (isEnglish) {
             arrayOf(
                 "Climate",
                 "Water",
@@ -123,9 +124,9 @@ class SearchFragment : Fragment() {
                     // get language status
                     val targetLang = viewmodel.getTargetLanguage()
 
-                    if (targetLang == "en") {
+                    if (isEnglish) {
                         // translate user's query from English to German
-                        viewmodel.translateText(query, "de")
+                        viewmodel.translateText(query, "DE")
                             .observe(viewLifecycleOwner) { translatedQuery ->
                                 // search for donations with translated query
                                 viewmodel.searchDonations(translatedQuery)

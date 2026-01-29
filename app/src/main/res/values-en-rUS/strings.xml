@@ -44,7 +44,7 @@
     <string name="addAccountInfo">Account Info</string>
     <string name="searchHint">Enter Search Term</string>
     <string name="darkMode">Dark Mode</string>
-    <string name="language">Change Language to English</string>
+    <string name="language">Change Language to German</string>
     <string name="languageInfo">Please keep in mind that the donation information is machine-translated to English. We do not guarantee their accuracy.</string>
     <string name="aboutApp">About this App</string>
     <string name="feedback">Send Feedback Email</string>
@@ -58,7 +58,7 @@
 
     <string name="donateTo">You are donating to:</string>
     <string name="addAmount">Amount</string>
-    <string name="PayPal">Pay with PayPal</string>
+    <string name="PayPal">Check data</string>
     <string name="close">Close</string>
     <string name="noSearchResults">No matching donations found.</string>
 

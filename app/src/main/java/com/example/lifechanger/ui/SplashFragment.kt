@@ -39,21 +39,22 @@ class SplashFragment : Fragment() {
         // get language status
         val targetLang = viewmodel.getTargetLanguage()
 
-        // display quotes based on language status
-        if (targetLang == "de") {
-            viewmodel.getRandomQuote().observe(viewLifecycleOwner) { randomQuote ->
-                if (randomQuote != null) {
-                    // fill textview with random, animated quote
-                    animateText(binding.quoteTV, randomQuote.quote)
-                }
+        // display quote based on language status (nur 1 Observer + Fallback)
+        viewmodel.getRandomQuote().observe(viewLifecycleOwner) { randomQuote ->
+            // wenn Animation schon läuft, nicht nochmal starten (LiveData kann mehrfach feuern)
+            if (isAnimationRunning) return@observe
+
+            val rawText = if (targetLang.equals("DE", ignoreCase = true)) {
+                randomQuote?.quote
+            } else {
+                randomQuote?.quoteTranslated
             }
-        } else {
-            viewmodel.getRandomQuote().observe(viewLifecycleOwner) { randomQuote ->
-                if (randomQuote != null) {
-                    // fill textview with random, animated, translated quote
-                    animateText(binding.quoteTV, randomQuote.quoteTranslated)
-                }
-            }
+
+            // Fallback falls null/leer (sonst kann es beim substring/Parcel krachen)
+            val safeText = rawText?.takeIf { it.isNotBlank() }
+                ?: if (targetLang.equals("DE", ignoreCase = true)) "Willkommen" else "Welcome"
+
+            animateText(binding.quoteTV, safeText)
         }
     }
 
@@ -73,23 +74,25 @@ class SplashFragment : Fragment() {
     }
 
     private fun animateText(textView: TextView, text: String) {
-        if (isAnimationRunning) {
-            return
-        }
+        if (isAnimationRunning) return
+
+        val safeText = text.ifBlank { " " }
 
         isAnimationRunning = true
         var index = 0
 
         handler.postDelayed(object : Runnable {
             override fun run() {
-                if (index < text.length) {
-                    val currentText = text.substring(0, index + 1)
-                    textView.text = currentText
+                // Fragment/View evtl. schon weg → abbrechen
+                if (!isAdded || view == null) return
+
+                if (index < safeText.length) {
+                    textView.text = safeText.substring(0, index + 1)
                     index++
                     handler.postDelayed(this, 100)
                 } else {
                     isAnimationRunning = false
-                    Handler(Looper.getMainLooper()).postDelayed({
+                    handler.postDelayed({
                         navigateToHomeFragment()
                     }, 2000)
                 }
@@ -98,8 +101,8 @@ class SplashFragment : Fragment() {
     }
 
     private fun navigateToHomeFragment() {
-        val navController = findNavController()
-        navController.navigate(
+        if (!isAdded || view == null) return
+        findNavController().navigate(
             SplashFragmentDirections.actionSplashFragmentToHomeFragment()
         )
     }
@@ -115,6 +118,7 @@ class SplashFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        handler.removeCallbacksAndMessages(null)
         // show toolbar and bottom menu when SplashFragment is destroyed
         (activity as MainActivity?)?.findViewById<View>(R.id.toolBar)?.visibility = View.VISIBLE
         (activity as MainActivity?)?.findViewById<View>(R.id.toolbarTV)?.visibility = View.VISIBLE
